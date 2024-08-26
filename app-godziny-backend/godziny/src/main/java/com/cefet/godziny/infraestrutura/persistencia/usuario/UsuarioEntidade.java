@@ -1,5 +1,6 @@
 package com.cefet.godziny.infraestrutura.persistencia.usuario;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
@@ -51,6 +52,9 @@ public class UsuarioEntidade implements UserDetails{
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EnumRecursos tipo;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

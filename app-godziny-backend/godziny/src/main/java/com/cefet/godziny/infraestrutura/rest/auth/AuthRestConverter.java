@@ -7,15 +7,18 @@ import java.util.Map;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.cefet.godziny.api.auth.AuthResponseDto;
+import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
+import com.cefet.godziny.infraestrutura.rest.usuario.UsuarioRestConverter;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AccessLevel;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AuthRestConverter {
-    public static AuthResponseDto jwtTokenToAuthResponseDto(String jwtToken) {
+    public static AuthResponseDto jwtTokenToAuthResponseDto(String jwtToken, UsuarioEntidade usuarioEntidade) {
         return AuthResponseDto.builder()
         .token(jwtToken)
+        .usuario(UsuarioRestConverter.EntidadeToUsuarioRecuperarDto(usuarioEntidade))
         .build();
     }
 

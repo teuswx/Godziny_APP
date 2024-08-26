@@ -1,6 +1,7 @@
 package com.cefet.godziny.api.curso;
 
 import java.util.UUID;
+import com.cefet.godziny.api.usuario.UsuarioRecuperarDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -24,4 +25,8 @@ public class CursoRecuperarDto{
 
     @NotNull
     private Integer carga_horaria_complementar;
+
+    @NotNull
+    @NotBlank
+    private UsuarioRecuperarDto coordenador;
 }

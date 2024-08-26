@@ -35,6 +35,7 @@ public class UsuarioRestConverter {
         .email(usuarioEntidade.getEmail())
         .senha(usuarioEntidade.getSenha())
         .tipo(usuarioEntidade.getTipo())
+        .createdAt(usuarioEntidade.getCreatedAt())
         .build();
     }
 
@@ -46,6 +47,7 @@ public class UsuarioRestConverter {
         .email(dto.getEmail())
         .senha(dto.getSenha())
         .tipo(dto.getTipo())
+        .createdAt(dto.getCreatedAt())
         .build();
     }
 
@@ -54,6 +56,9 @@ public class UsuarioRestConverter {
         .nome(dto.getNome())
         .email(dto.getEmail())
         .senha(dto.getSenha())
+        .cursoSigla(dto.getCursoSigla())
+        .createdAt(dto.getCreatedAt())
+        .tipo(dto.getTipo())
         .usuarioRepositorioJpa(usuarioRepositorioJpa)
         .cursoRepositorioJpa(cursoRepositorioJpa)
         .build();
@@ -66,6 +71,9 @@ public class UsuarioRestConverter {
         .nome(dto.getNome())
         .email(dto.getEmail())
         .senha(dto.getSenha())
+        .cursoSigla(dto.getCursoSigla())
+        .createdAt(dto.getCreatedAt())
+        .tipo(dto.getTipo())
         .usuarioRepositorioJpa(usuarioRepositorioJpa)
         .cursoRepositorioJpa(cursoRepositorioJpa)
         .build();

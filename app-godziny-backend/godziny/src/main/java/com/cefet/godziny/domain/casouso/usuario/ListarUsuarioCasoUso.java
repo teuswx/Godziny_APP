@@ -29,12 +29,14 @@ public class ListarUsuarioCasoUso {
         dto.setEmail(usuarioEntidade.getEmail());
         dto.setSenha(usuarioEntidade.getSenha());
         dto.setTipo(usuarioEntidade.getTipo());
+        dto.setCreatedAt(usuarioEntidade.getCreatedAt());
         dto.getMatricula();
         dto.getCurso();
         dto.getNome();
         dto.getEmail();
         dto.getSenha();
         dto.getTipo();
+        dto.getCreatedAt();
         return dto;
     }
 }

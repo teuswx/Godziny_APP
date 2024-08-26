@@ -1,5 +1,9 @@
 package com.cefet.godziny.api.usuario;
 
+import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.cefet.godziny.api.curso.CursoRecuperarDto;
 import com.cefet.godziny.constantes.usuario.EnumRecursos;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -38,4 +42,8 @@ public class UsuarioRecuperarDto{
 
     @NotNull
     private EnumRecursos tipo;
+
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdAt;
 }

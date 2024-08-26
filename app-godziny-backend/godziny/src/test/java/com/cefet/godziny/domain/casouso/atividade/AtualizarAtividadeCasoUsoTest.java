@@ -252,10 +252,15 @@ public class AtualizarAtividadeCasoUsoTest {
     }
 
     private AtividadeEntidade createAtividadeEntidade(){
-        CursoEntidade CURSO = new CursoEntidade(UUID.randomUUID(), "ODONT_DIV", "Odontologia", 300);
+        CursoEntidade CURSO = new CursoEntidade(
+            UUID.randomUUID(),
+            "ODONT_DIV", "Odontologia",
+            300,
+            new UsuarioEntidade(99999, null, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.ADM, LocalDateTime.now())
+        );
         return new AtividadeEntidade(
             UUID.randomUUID(),
-            new UsuarioEntidade(99999, CURSO, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.NORMAL),
+            new UsuarioEntidade(99999, CURSO, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.NORMAL, LocalDateTime.now()),
             new CategoriaEntidade(UUID.randomUUID(), CURSO, "nome TESTE", (float) 0.5,  (float) 0.2, "descriçao TESTE"),
             "nome atividade TESTE",
             LocalDateTime.now(),

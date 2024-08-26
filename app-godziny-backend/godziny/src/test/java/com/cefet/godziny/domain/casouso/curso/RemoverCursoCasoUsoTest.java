@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -58,7 +59,13 @@ public class RemoverCursoCasoUsoTest {
     @Test
     @DisplayName("Should delete a Curso successfully")
     void testRemoverCursoSuccess() throws Exception {
-        this.entidade = new CursoEntidade( UUID.randomUUID(), "TESTE", "TESTE_TESTE", 100);
+        this.entidade = new CursoEntidade(
+            UUID.randomUUID(),
+            "TESTE",
+            "TESTE_TESTE",
+            100,
+            new UsuarioEntidade(99999, null, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.ADM, LocalDateTime.now())
+        );
         Page<UsuarioEntidade> pageUsers = new PageImpl<>(List.of());
         List<CategoriaEntidade> listCategoria = List.of();
 
@@ -76,14 +83,21 @@ public class RemoverCursoCasoUsoTest {
     @Test
     @DisplayName("Try to delete a Curso and return an excepiton because exists users inside it")
     void testRemoverCursoCasoUsoExceptionCase1() throws Exception{
-        this.entidade = new CursoEntidade(UUID.randomUUID(), "TESTE", "TESTE_TESTE", 100);
+        this.entidade = new CursoEntidade(
+            UUID.randomUUID(),
+            "TESTE",
+            "TESTE_TESTE",
+            100,
+            new UsuarioEntidade(99999, null, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.ADM, LocalDateTime.now())
+        );
         List<UsuarioEntidade> userList = List.of(new UsuarioEntidade(
             9999999,
             entidade,
             "Teste", 
             "teste@teste.com",
             "teste",
-            EnumRecursos.NORMAL
+            EnumRecursos.NORMAL,
+            LocalDateTime.now()
         ));
         Page<UsuarioEntidade> pageUsers = new PageImpl<>(userList);
         List<CategoriaEntidade> listCategoria = List.of();
@@ -103,7 +117,13 @@ public class RemoverCursoCasoUsoTest {
     @Test
     @DisplayName("Try to delete a Curso and return an excepiton because exists categorias inside it")
     void testRemoverCursoCasoUsoExceptionCase2() throws Exception{
-        this.entidade = new CursoEntidade(UUID.randomUUID(), "TESTE", "TESTE_TESTE", 100);
+        this.entidade = new CursoEntidade(
+            UUID.randomUUID(),
+            "TESTE",
+            "TESTE_TESTE",
+            100,
+            new UsuarioEntidade(99999, null, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.ADM, LocalDateTime.now())
+        );
         Page<UsuarioEntidade> pageUsers = new PageImpl<>(List.of());
         List<CategoriaEntidade> listCategoria = List.of(new CategoriaEntidade(
             UUID.randomUUID(),

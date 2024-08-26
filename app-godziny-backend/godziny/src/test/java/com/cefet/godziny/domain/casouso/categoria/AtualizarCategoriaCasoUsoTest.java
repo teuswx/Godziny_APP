@@ -1,6 +1,8 @@
 package com.cefet.godziny.domain.casouso.categoria;
 
 import static org.mockito.Mockito.when;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -12,12 +14,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.cefet.godziny.api.categoria.CategoriaDto;
+import com.cefet.godziny.constantes.usuario.EnumRecursos;
 import com.cefet.godziny.infraestrutura.exceptions.CampoRepetidoNoBancoException;
 import com.cefet.godziny.infraestrutura.exceptions.categoria.CriarCategoriaIncompletaException;
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoRepositorioJpa;
+import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -259,7 +264,8 @@ public class AtualizarCategoriaCasoUsoTest {
             UUID.randomUUID(),
             "ODONT_DIV",
             "Odontologia",
-            1
+            1,
+            new UsuarioEntidade(99999, null, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.ADM, LocalDateTime.now())
         );
     }
 

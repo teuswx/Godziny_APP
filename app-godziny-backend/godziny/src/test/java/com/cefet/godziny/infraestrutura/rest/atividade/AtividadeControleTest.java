@@ -38,7 +38,8 @@ public class AtividadeControleTest{
         UUID.randomUUID(),
         "ENG_ELET_BH",
         "Engenharia Elétrica",
-        500
+        500,
+        new UsuarioEntidade(99999, null, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.ADM, LocalDateTime.now())
     );
     private static final UsuarioEntidade USUARIO = new UsuarioEntidade(
         99999,
@@ -46,7 +47,8 @@ public class AtividadeControleTest{
         "Usuario teste",
         "usuarioteste@gmail.com",
         "123456",
-        EnumRecursos.NORMAL
+        EnumRecursos.NORMAL,
+        LocalDateTime.now()
     );
     private static final CategoriaEntidade CATEGORIA = new CategoriaEntidade(
         UUID.randomUUID(),

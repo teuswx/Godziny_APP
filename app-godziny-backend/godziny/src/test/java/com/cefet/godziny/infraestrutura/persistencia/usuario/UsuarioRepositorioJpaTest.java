@@ -1,6 +1,7 @@
 package com.cefet.godziny.infraestrutura.persistencia.usuario;
 
 import org.junit.jupiter.api.Test;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,11 +37,14 @@ public class UsuarioRepositorioJpaTest {
         UUID.randomUUID(),
         "ODONT_DIV",
         "Odontologia",
-        615
+        615,
+        new UsuarioEntidade(99999, null, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.ADM, LocalDateTime.now())
     );
     private static final String EMAIL = "teste@teste.com";
     private static final String SENHA = "teste";
     private static final EnumRecursos TIPO =EnumRecursos.NORMAL;
+    private static final LocalDateTime DATA = LocalDateTime.now();
+
 
     private Optional<UsuarioEntidade> optional;
     private UsuarioEntidade entidade;
@@ -100,6 +104,21 @@ public class UsuarioRepositorioJpaTest {
 
         assertThat(result).isInstanceOf(UsuarioEntidade.class);
         assertThat(result).isNotNull();
+    }
+
+    @Test
+    @DisplayName("Search for  an Usuario by EMAIL and return an existing Optional successfully from DataBase")
+    void testFindByEmailOptionalSuccess() throws Exception {
+        this.optional = createOptionalUsuario();
+
+        when(usuarioRepositorioJpaSpring.findByEmail(Mockito.any())).thenReturn(this.optional);
+        Optional<UsuarioEntidade> result = usuarioRepositorio.findByEmailOptional(EMAIL);
+
+        assertThat(result).isNotNull();
+        assertThat(result).isPresent();
+        assertThat(result.get()).isInstanceOf(UsuarioEntidade.class);
+        assertThat(result.get()).isEqualTo(this.optional.get());
+        assertThat(result.get().getEmail()).isEqualTo(EMAIL);
     }
 
     @Test
@@ -226,14 +245,14 @@ public class UsuarioRepositorioJpaTest {
     }
     
     private Optional<UsuarioEntidade> createOptionalUsuario(){
-        UsuarioEntidade usuario = new UsuarioEntidade(MATRICULA, CURSO_ENTIDADE, NOME, EMAIL, SENHA, TIPO);
+        UsuarioEntidade usuario = new UsuarioEntidade(MATRICULA, CURSO_ENTIDADE, NOME, EMAIL, SENHA, TIPO, DATA);
     
         Optional<UsuarioEntidade> usuárioOptional = Optional.ofNullable(usuario);
         return usuárioOptional;
     }
 
     private UsuarioEntidade createUsuarioEntidade(){
-        UsuarioEntidade usuario = new UsuarioEntidade(MATRICULA, CURSO_ENTIDADE, NOME, EMAIL, SENHA, TIPO);
+        UsuarioEntidade usuario = new UsuarioEntidade(MATRICULA, CURSO_ENTIDADE, NOME, EMAIL, SENHA, TIPO, DATA);
         return usuario;
     }
 }

@@ -7,7 +7,6 @@ import com.cefet.godziny.api.auth.AuthDto;
 import com.cefet.godziny.api.auth.AuthResponseDto;
 import com.cefet.godziny.api.auth.IAuthApi;
 import com.cefet.godziny.infraestrutura.persistencia.auth.AuthRepositorioJpa;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;

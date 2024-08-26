@@ -25,7 +25,6 @@ import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaReposito
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioRepositorioJpa;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -91,7 +90,7 @@ public class CriarAtividadeCasoUsoTest {
     }
 
     @Test
-    @DisplayName("Try to create an Atividade and return an excepiton because the TITULO is too short")
+    @DisplayName("Try to create an Atividade and return an excepiton because the DATA is future")
     void testCriarAtividadeCasoUsoExceptionCase1() throws Exception{
         criarAtividadeCasoUso.setCreatedAt(LocalDateTime.now().plusMonths(1));
 
@@ -138,10 +137,16 @@ public class CriarAtividadeCasoUsoTest {
 
 
     private AtividadeEntidade createAtividadeEntidade(){
-        CursoEntidade CURSO = new CursoEntidade(UUID.randomUUID(), "ODONT_DIV", "Odontologia", 300);
+        CursoEntidade CURSO = new CursoEntidade(
+            UUID.randomUUID(),
+            "ODONT_DIV",
+            "Odontologia",
+            300,
+            new UsuarioEntidade(99999, null, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.ADM, LocalDateTime.now())
+        );
         return new AtividadeEntidade(
             UUID.randomUUID(),
-            new UsuarioEntidade(99999, CURSO, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.NORMAL),
+            new UsuarioEntidade(99999, CURSO, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.NORMAL, LocalDateTime.now()),
             new CategoriaEntidade(UUID.randomUUID(), CURSO, "nome TESTE", (float) 0.5,  (float) 0.2, "descriçao TESTE"),
             "nome atividade TESTE",
             LocalDateTime.now(),

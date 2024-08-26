@@ -87,7 +87,8 @@ public class RemoverAtividadeCasoUsoTest {
             UUID.randomUUID(),
             "ODONT_DIV",
             "Odontologia",
-            1
+            1,
+            new UsuarioEntidade(99999, null, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.ADM, LocalDateTime.now())
         );
 
         return new AtividadeEntidade(
@@ -98,7 +99,8 @@ public class RemoverAtividadeCasoUsoTest {
                 "nome TESTE",
                 "teste@test.com",
                 "senha TESTE",
-                EnumRecursos.NORMAL
+                EnumRecursos.NORMAL,
+                LocalDateTime.now()
             ),
             new CategoriaEntidade(
                 UUID.randomUUID(),

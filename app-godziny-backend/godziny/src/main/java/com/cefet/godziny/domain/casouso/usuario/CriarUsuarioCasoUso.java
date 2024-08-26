@@ -1,15 +1,20 @@
 package com.cefet.godziny.domain.casouso.usuario;
 
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.cefet.godziny.api.usuario.UsuarioDto;
+import com.cefet.godziny.constantes.usuario.EnumRecursos;
+import com.cefet.godziny.infraestrutura.exceptions.usuario.CriarUsuarioAdmComCursoException;
 import com.cefet.godziny.infraestrutura.exceptions.usuario.CriarUsuarioEmailRepetidoException;
 import com.cefet.godziny.infraestrutura.exceptions.usuario.CriarUsuarioIncompletoException;
+import com.cefet.godziny.infraestrutura.exceptions.usuario.CriarUsuarioNormalSemCursoException;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioRepositorioJpa;
 import com.cefet.godziny.infraestrutura.rest.usuario.UsuarioRestConverter;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.lang.Nullable;
 import lombok.*;
 
 @Builder
@@ -25,6 +30,15 @@ public class CriarUsuarioCasoUso {
 
     @NotNull(message = "A senha do usuário é obrigatória")
     private String senha;
+
+    @Nullable()
+    private String cursoSigla;
+
+    @NotNull(message = "A data de criaçao do usuário é obrigatória")
+    private LocalDateTime createdAt;
+
+    @NotNull(message = "O tipo do usuário é obrigatório")
+    private EnumRecursos tipo;
 
     @Autowired
     private final UsuarioRepositorioJpa usuarioRepositorioJpa;
@@ -44,6 +58,15 @@ public class CriarUsuarioCasoUso {
         }
         if(usuarioRepositorioJpa.findByEmail(this.email) != null){
             throw new CriarUsuarioEmailRepetidoException();
+        }
+        if (this.createdAt.isAfter(LocalDateTime.now())) {
+            throw new CriarUsuarioIncompletoException("A data de criação do usuário deve ser menor ou igual à data e hora atuais");
+        }
+        if(this.tipo == EnumRecursos.NORMAL && this.cursoSigla == ""){
+            throw new CriarUsuarioNormalSemCursoException();
+        }
+        if(this.tipo == EnumRecursos.ADM && this.cursoSigla != ""){
+            throw new CriarUsuarioAdmComCursoException();
         }
     }
 

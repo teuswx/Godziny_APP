@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.cefet.godziny.api.curso.CursoDto;
 import com.cefet.godziny.api.curso.CursoRecuperarDto;
+import com.cefet.godziny.constantes.usuario.EnumRecursos;
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoRepositorioJpa;
@@ -23,6 +24,8 @@ import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioRepositorioJpa;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +35,7 @@ public class CursoControleTest {
     private static final String SIGLA = "ENG_ELET_BH";
     private static final Integer CARGA_HORARIA_COMPLEMENTAR = 500;
     private static final String NOME = "Engenharia Elétrica";
+    private static final UsuarioEntidade COORDENADOR = new UsuarioEntidade(99999, null, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.ADM, LocalDateTime.now());
 
     private CursoEntidade entidade;
     private CursoDto dto;
@@ -82,6 +86,7 @@ public class CursoControleTest {
         this.dto = createCursoDto();
 
         when(cursoRepositorioJpa.createCurso(Mockito.any(CursoEntidade.class))).thenReturn(SIGLA);
+        when(usuarioRepositorioJpa.findById(Mockito.anyInt())).thenReturn(COORDENADOR);
         ResponseEntity<String> response = controler.createCurso(dto);
 
         assertThat(response.getBody()).isInstanceOf(String.class);
@@ -98,6 +103,7 @@ public class CursoControleTest {
 
         when(cursoRepositorioJpa.updateCurso(Mockito.anyString(), Mockito.any(CursoEntidade.class))).thenReturn(SIGLA);
         when(cursoRepositorioJpa.findBySigla(Mockito.anyString())).thenReturn(entidade);
+        when(usuarioRepositorioJpa.findById(Mockito.anyInt())).thenReturn(COORDENADOR);
         ResponseEntity<String> response = controler.updateCurso(SIGLA, dto);
 
         assertThat(response.getBody()).isInstanceOf(String.class);
@@ -120,7 +126,7 @@ public class CursoControleTest {
     }
 
     private CursoEntidade createCursoEntidade(){
-        CursoEntidade curso = new CursoEntidade(ID, SIGLA, NOME, CARGA_HORARIA_COMPLEMENTAR);
+        CursoEntidade curso = new CursoEntidade(ID, SIGLA, NOME, CARGA_HORARIA_COMPLEMENTAR, COORDENADOR);
         return curso;
     }
 
@@ -130,6 +136,7 @@ public class CursoControleTest {
         curso.setSigla(SIGLA);
         curso.setNome(NOME);
         curso.setCarga_horaria_complementar(CARGA_HORARIA_COMPLEMENTAR);
+        curso.setCoordenador_matricula(COORDENADOR.getMatricula());
         return curso;
     }
 }

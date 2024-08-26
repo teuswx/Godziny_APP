@@ -1,6 +1,8 @@
 package com.cefet.godziny.domain.casouso.curso;
 
 import static org.mockito.Mockito.when;
+
+import java.time.LocalDateTime;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,10 +12,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.cefet.godziny.api.curso.CursoDto;
+import com.cefet.godziny.constantes.usuario.EnumRecursos;
 import com.cefet.godziny.infraestrutura.exceptions.CampoRepetidoNoBancoException;
+import com.cefet.godziny.infraestrutura.exceptions.curso.CriarCursoComUsuarioNormalException;
 import com.cefet.godziny.infraestrutura.exceptions.curso.CriarCursoIncompletoException;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoRepositorioJpa;
+import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
+import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioRepositorioJpa;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
     
@@ -24,11 +31,14 @@ public class AtualizarCursoCasoUsoTest {
     @Mock
     CursoRepositorioJpa cursoRepositorioJpa;
 
+    @Mock
+    UsuarioRepositorioJpa usuarioRepositorioJpa;
+
     private AtualizarCursoCasoUso atualizarCursoCasoUso;
 
     @BeforeEach
     void inicializarDados() {
-        atualizarCursoCasoUso = new AtualizarCursoCasoUso(cursoRepositorioJpa, UUID.randomUUID(), "TESTE", "TESTE_ANTIGO", "TESTE_TESTE", 100);
+        atualizarCursoCasoUso = new AtualizarCursoCasoUso(cursoRepositorioJpa, usuarioRepositorioJpa, UUID.randomUUID(), "TESTE", "TESTE_ANTIGO", "TESTE_TESTE", 100, 1);
     };
 
     @AfterEach
@@ -40,18 +50,20 @@ public class AtualizarCursoCasoUsoTest {
     @Test
     @DisplayName("Should valided a AtualizarCursoCasoUso successfully")
     void testeAtualizarCursoCasoUsoSuccess() throws Exception {
-        this.dto = new CursoDto(UUID.randomUUID(), "TESTE", "TESTE_TESTE", 100);
+        this.dto = new CursoDto(UUID.randomUUID(), "TESTE", "TESTE_TESTE", 100, 1);
+        UsuarioEntidade coordenador = new UsuarioEntidade(99999, null, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.ADM, LocalDateTime.now());
 
         when(cursoRepositorioJpa.updateCurso(Mockito.anyString(), Mockito.any(CursoEntidade.class))).thenReturn("TESTE");
+        when(usuarioRepositorioJpa.findById(Mockito.anyInt())).thenReturn(coordenador);
         atualizarCursoCasoUso.validarAtualizacao();
-        String response = atualizarCursoCasoUso.AtualizarCurso("TESTE", dto);
+        String response = atualizarCursoCasoUso.AtualizarCurso("TESTE", dto, coordenador);
 
         assertThat(response).isInstanceOf(String.class);
         assertThat(response).isNotNull();
     }
 
     @Test
-    @DisplayName("Try to create a Curso and return an excepiton because the SIGLA is too big")
+    @DisplayName("Try to update a Curso and return an excepiton because the SIGLA is too big")
     void testAtualizarCursoCasoUsoExceptionCase1() throws Exception{
         atualizarCursoCasoUso.setSigla("SIGLAS bigger than 20 letters are not allowed");
 
@@ -64,7 +76,7 @@ public class AtualizarCursoCasoUsoTest {
     }
 
     @Test
-    @DisplayName("Try to create a Curso and return an exception because the SIGLA is too short")
+    @DisplayName("Try to update a Curso and return an exception because the SIGLA is too short")
     void testeAtualizarCursoCasoUsoExceptionCase2() {
         atualizarCursoCasoUso.setSigla("S");
         
@@ -78,7 +90,7 @@ public class AtualizarCursoCasoUsoTest {
 
 
     @Test
-    @DisplayName("Try to create a Curso and return an excepiton because the NOME too big")
+    @DisplayName("Try to update a Curso and return an excepiton because the NOME too big")
     void testeAtualizarCursoCasoUsoExceptionCase3() throws Exception{
         atualizarCursoCasoUso.setNome("That NOME is too big! The Godziny's rules doesn't let this happen because it's not allowed and Who do want to put a long NOME like this?");
 
@@ -91,7 +103,7 @@ public class AtualizarCursoCasoUsoTest {
     }
 
     @Test
-    @DisplayName("Try to create a Curso and return an excepiton because the NOME is too short")
+    @DisplayName("Try to update a Curso and return an excepiton because the NOME is too short")
     void testeAtualizarCursoCasoUsoExceptionCase4() throws Exception{
         atualizarCursoCasoUso.setNome("N");
 
@@ -104,7 +116,7 @@ public class AtualizarCursoCasoUsoTest {
     }
 
     @Test
-    @DisplayName("Try to create a Curso and return an excepiton because the CARGA_HORARIA_COMPLEMENTAR is too big")
+    @DisplayName("Try to update a Curso and return an excepiton because the CARGA_HORARIA_COMPLEMENTAR is too big")
     void testeAtualizarCursoCasoUsoExceptionCase5() throws Exception{
         atualizarCursoCasoUso.setCargaHorariaComplementar(1000);
 
@@ -117,7 +129,7 @@ public class AtualizarCursoCasoUsoTest {
     }
 
     @Test
-    @DisplayName("Try to create a Curso and return an excepiton because the CARGA_HORARIA_COMPLEMENTAR is too short")
+    @DisplayName("Try to update a Curso and return an excepiton because the CARGA_HORARIA_COMPLEMENTAR is too short")
     void testeAtualizarCursoCasoUsoExceptionCase6() throws Exception{
         atualizarCursoCasoUso.setCargaHorariaComplementar(50);
 
@@ -130,9 +142,15 @@ public class AtualizarCursoCasoUsoTest {
     }
 
     @Test
-    @DisplayName("Try to create a Curso and return an excepiton because the SIGLA already exists")
-    void testCriarCursoCasoUsoExceptionCase7() throws Exception{
-        CursoEntidade entidade = new CursoEntidade(UUID.randomUUID(),"ENG_ELET_BH", "Engenharia Elétrica", 500);
+    @DisplayName("Try to update a Curso and return an excepiton because the SIGLA already exists")
+    void testeAtualizarCursoCasoUsoExceptionCase7() throws Exception{
+        CursoEntidade entidade = new CursoEntidade(
+            UUID.randomUUID(),
+            "ENG_ELET_BH",
+            "Engenharia Elétrica",
+            500,
+            new UsuarioEntidade(99999, null, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.ADM, LocalDateTime.now())
+            );
 
         when(cursoRepositorioJpa.findBySigla(Mockito.anyString())).thenReturn(entidade);
         Exception thrown = assertThrows(CampoRepetidoNoBancoException.class, () -> {
@@ -141,6 +159,20 @@ public class AtualizarCursoCasoUsoTest {
         
         assertThat(thrown).isNotNull();
         assertThat(thrown.getMessage()).isEqualTo("Já existe um Curso com essa sigla cadastrado na base de dados");
+    }
+
+    @Test
+    @DisplayName("Try to update a Curso and return an excepiton because the COORDENADOR is not an ADM")
+    void testeAtualizarCursoCasoUsoExceptionCase8() throws Exception{
+        UsuarioEntidade coordenador = new UsuarioEntidade(99999, null, "nome TESTE", "teste@test.com", "senha TESTE", EnumRecursos.NORMAL, LocalDateTime.now());
+
+        when(usuarioRepositorioJpa.findById(Mockito.anyInt())).thenReturn(coordenador);
+        Exception thrown = assertThrows(CriarCursoComUsuarioNormalException.class, () -> {
+            atualizarCursoCasoUso.validarAtualizacao();
+        });
+        
+        assertThat(thrown).isNotNull();
+        assertThat(thrown.getMessage()).isEqualTo("O coordenador do curso deve ser um usuário do tipo 'ADM'");
     }
 }
 
