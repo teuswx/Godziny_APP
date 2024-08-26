@@ -43,7 +43,7 @@ public class PesquisarUsuarioCasoUso {
         }
         if (matricula != null) {
             specification = specification.and((root, query, criteriaBuilder) -> 
-                criteriaBuilder.like(root.get("matricula"), "%" + matricula + "%"));
+                criteriaBuilder.equal(root.get("matricula"), matricula));
         }
         if (cursoSigla != null) {
             specification = specification.and((root, query, criteriaBuilder) ->
