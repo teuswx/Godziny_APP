@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig {
-    public static final String DATETIME_FORMAT = "yyyy-MM-dd-'T'HH:mm:ss'Z'";
+    public static final String DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     public static LocalDateTimeSerializer LOCAL_DATETIME_SERIALIZER = new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATETIME_FORMAT));
     private final UsuarioRepositorioJpa usuarioRepositorioJpa;
     private final PasswordEncoder enconder;
