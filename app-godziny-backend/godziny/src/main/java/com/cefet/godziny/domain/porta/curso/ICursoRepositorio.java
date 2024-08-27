@@ -3,6 +3,7 @@ package com.cefet.godziny.domain.porta.curso;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoEntidade;
 
 public interface ICursoRepositorio {
@@ -11,7 +12,7 @@ public interface ICursoRepositorio {
 
     Optional<CursoEntidade>findBySiglaOptional(String sigla);
 
-    Page<CursoEntidade> listCursos(Pageable pageable);
+    Page<CursoEntidade> listCursos(Specification<CursoEntidade> specification, Pageable pageable);
     
     String createCurso(CursoEntidade curso);
 

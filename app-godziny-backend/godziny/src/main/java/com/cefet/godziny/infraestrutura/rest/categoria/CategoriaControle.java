@@ -7,11 +7,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.cefet.godziny.api.categoria.CategoriaDto;
+import com.cefet.godziny.api.categoria.CategoriaFiltroDto;
 import com.cefet.godziny.api.categoria.CategoriaRecuperarDto;
 import com.cefet.godziny.api.categoria.ICategoriaApi;
 import com.cefet.godziny.domain.casouso.categoria.AtualizarCategoriaCasoUso;
 import com.cefet.godziny.domain.casouso.categoria.CriarCategoriaCasoUso;
 import com.cefet.godziny.domain.casouso.categoria.ListarCategoriaCasoUso;
+import com.cefet.godziny.domain.casouso.categoria.PesquisarCategoriaCasoUso;
 import com.cefet.godziny.domain.casouso.categoria.RemoverCategoriaCasoUso;
 import com.cefet.godziny.infraestrutura.persistencia.atividade.AtividadeRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaRepositorioJpa;
@@ -42,11 +44,11 @@ public class CategoriaControle implements ICategoriaApi {
         ListarCategoriaCasoUso casoUso = new ListarCategoriaCasoUso(categoriaRepositorioJpa, id);
         return ResponseEntity.status(HttpStatus.OK).body(casoUso.validarListagem());
     }
-
+    
     @Override
-    public ResponseEntity<Page<CategoriaRecuperarDto>> listCategorias(Pageable pageable) {
-        ListarCategoriaCasoUso casoUso = new ListarCategoriaCasoUso(categoriaRepositorioJpa, UUID.randomUUID());
-        return  ResponseEntity.status(HttpStatus.OK).body(casoUso.listarCategorias(pageable));
+    public ResponseEntity<Page<CategoriaRecuperarDto>> pesquisarCategoria(Pageable pageable, CategoriaFiltroDto categoriaFiltroDto) throws Exception {
+        PesquisarCategoriaCasoUso casoUso = new PesquisarCategoriaCasoUso(categoriaRepositorioJpa, categoriaFiltroDto.getCursoSigla(), categoriaFiltroDto.getNome());
+        return ResponseEntity.status(HttpStatus.OK).body(casoUso.pesquisarCategoria(pageable));
     }
 
     @Override

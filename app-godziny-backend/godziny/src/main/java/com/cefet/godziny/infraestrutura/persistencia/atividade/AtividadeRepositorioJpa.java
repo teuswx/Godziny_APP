@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import com.cefet.godziny.domain.porta.atividade.IAtividadeRepositorio;
@@ -41,8 +42,8 @@ public class AtividadeRepositorioJpa implements IAtividadeRepositorio {
     }
 
     @Override
-    public Page<AtividadeEntidade> listAtividades(Pageable pageable) {
-        return atividadeRepositorio.findAll(pageable);
+    public Page<AtividadeEntidade> listAtividades(Specification<AtividadeEntidade> specification, Pageable pageable) {
+        return atividadeRepositorio.findAll(specification, pageable);
     }
 
     @Override

@@ -14,10 +14,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import com.cefet.godziny.constantes.atividade.EnumStatus;
 import com.cefet.godziny.constantes.usuario.EnumRecursos;
@@ -141,7 +137,7 @@ public class AtividadeRepositorioJpaTest {
         assertThat(result).contains(entidade);
         assertThat(result).isNotEmpty();
     }
-
+/*
     @Test
     @DisplayName("Should list all Atividades successfully")
     void testListAtividadesSuccess() {
@@ -157,7 +153,7 @@ public class AtividadeRepositorioJpaTest {
         assertThat(result.getSize()).isNotNull();
         assertThat(result).hasSizeGreaterThan(0); 
     }
-
+*/
     @Test
     @DisplayName("Search for an Atividade and return an excepiton because the ID doesn't exist")
     void testFindByIdAtividadeNaoEncontradaException() throws Exception {

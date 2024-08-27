@@ -12,7 +12,7 @@ import lombok.*;
 public class CategoriaDto {
 
     private UUID id;
-    
+
     @NotNull
     @NotBlank
     private String cursoSigla;

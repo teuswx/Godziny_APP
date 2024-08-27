@@ -2,8 +2,6 @@ package com.cefet.godziny.domain.casouso.categoria;
 
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import com.cefet.godziny.api.categoria.CategoriaRecuperarDto;
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaRepositorioJpa;
@@ -25,15 +23,7 @@ public class ListarCategoriaCasoUso {
         createCategoriaRecuperarDto(entidade);
         return CategoriaRestConverter.EntidadeToCategoriaRecuperarDto(entidade);
     }
-
-    public Page<CategoriaRecuperarDto> listarCategorias(Pageable pageable) {
-        Page<CategoriaRecuperarDto> pageCategoriaDto = categoriaRepositorioJpa.listCategorias(pageable).map(
-            categoriaEntidade -> CategoriaRestConverter.EntidadeToCategoriaRecuperarDto(
-                categoriaEntidade
-        ));
-        return pageCategoriaDto;
-    }
-
+    
     private CategoriaRecuperarDto createCategoriaRecuperarDto(CategoriaEntidade categoriaEntidade){
         CategoriaRecuperarDto dto = new  CategoriaRecuperarDto();
         dto.setId(categoriaEntidade.getId());

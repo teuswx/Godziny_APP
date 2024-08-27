@@ -14,10 +14,11 @@ public interface IUsuarioApi {
     @GetMapping("/{matricula}")
     ResponseEntity<UsuarioRecuperarDto> getUsuario(@PathVariable(value = "matricula") Integer matricula) throws Exception;
 
-    @GetMapping("/list")
-    ResponseEntity<Page<UsuarioRecuperarDto>> listUsuarios(
+    @GetMapping("/pesquisar")
+    ResponseEntity<Page<UsuarioRecuperarDto>> pesquisarUsuarios(
         @PageableDefault(page = 0, size = 10, sort = "nome", direction = Sort.Direction.ASC)
-        Pageable pageable
+        Pageable pageable,
+        @RequestBody @Valid UsuarioFiltroDto usuarioFiltroDto
     ) throws Exception;
 
     @PostMapping("")

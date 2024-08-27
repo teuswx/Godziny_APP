@@ -1,15 +1,11 @@
 package com.cefet.godziny.domain.casouso.curso;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import com.cefet.godziny.api.curso.CursoDto;
 import com.cefet.godziny.api.curso.CursoRecuperarDto;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoRepositorioJpa;
-import com.cefet.godziny.infraestrutura.rest.curso.CursoRestConverter;
 import com.cefet.godziny.infraestrutura.rest.usuario.UsuarioRestConverter;
-
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -26,12 +22,7 @@ public class ListarCursoCasoUso {
         createCursoDto(entidade);
         return createCursoRecuperarDto(entidade);
     }
-
-    public Page<CursoRecuperarDto> listarCursos(Pageable pageable) {
-        Page<CursoRecuperarDto> pageCursoDto = cursoRepositorioJpa.listCursos(pageable).map(CursoRestConverter::EntidadeToCursoRecuperarDto);
-        return pageCursoDto;
-    }
-
+    
     private CursoDto createCursoDto(CursoEntidade cursoEntidade){
         CursoDto dto = new  CursoDto();
         dto.setId(cursoEntidade.getId());

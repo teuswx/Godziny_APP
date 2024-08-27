@@ -16,11 +16,13 @@ public interface IAtividadeApi {
     @GetMapping("/{atividadeId}")
     ResponseEntity<AtividadeRecuperarDto> getAtividade(@PathVariable(value = "atividadeId") UUID id) throws Exception;
 
-    @GetMapping("/list")
-    ResponseEntity<Page<AtividadeRecuperarDto>> listAtividades(
-        @PageableDefault(page = 0, size = 10, sort = "nome", direction = Sort.Direction.ASC)
-        Pageable pageable
-    );
+    @GetMapping("/pesquisar")
+        ResponseEntity<Page<AtividadeRecuperarDto>> pesquisarAtividade(
+            @PageableDefault(page = 0, size = 10, sort = "titulo", direction = Sort.Direction.ASC)
+            Pageable pageable,
+            @RequestBody @Valid AtividadeFiltroDto atividadeFiltroDto
+        ) throws Exception;
+
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<UUID> createAtividade(@Valid @RequestPart("dto") AtividadeDto dto, @RequestPart("arquivo") MultipartFile arquivo) throws Exception;

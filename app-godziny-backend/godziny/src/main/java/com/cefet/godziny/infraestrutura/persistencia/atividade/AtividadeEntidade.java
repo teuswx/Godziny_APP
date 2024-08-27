@@ -47,7 +47,7 @@ public class AtividadeEntidade implements Serializable {
     private CategoriaEntidade categoria;
 
     @Column(length = 500, nullable = false, name = "titulo")
-    private String nome;
+    private String titulo;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;

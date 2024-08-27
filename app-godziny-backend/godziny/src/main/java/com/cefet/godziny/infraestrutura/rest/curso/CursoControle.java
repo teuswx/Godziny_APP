@@ -11,10 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import com.cefet.godziny.api.curso.CursoDto;
+import com.cefet.godziny.api.curso.CursoFiltroDto;
 import com.cefet.godziny.api.curso.CursoRecuperarDto;
 import com.cefet.godziny.api.curso.ICursoApi;
 import com.cefet.godziny.domain.casouso.curso.CriarCursoCasoUso;
 import com.cefet.godziny.domain.casouso.curso.ListarCursoCasoUso;
+import com.cefet.godziny.domain.casouso.curso.PesquisarCursoCasoUso;
 import com.cefet.godziny.domain.casouso.curso.RemoverCursoCasoUso;
 import com.cefet.godziny.domain.casouso.curso.AtualizarCursoCasoUso;
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaRepositorioJpa;
@@ -42,9 +44,9 @@ public class CursoControle implements ICursoApi{
     }
 
     @Override
-    public ResponseEntity<Page<CursoRecuperarDto>> listCursos(Pageable pageable) {
-        ListarCursoCasoUso casoUso = new ListarCursoCasoUso(cursoRepositorioJpa, "");
-        return  ResponseEntity.status(HttpStatus.OK).body(casoUso.listarCursos(pageable));
+    public ResponseEntity<Page<CursoRecuperarDto>> pesquisarCursos(Pageable pageable, CursoFiltroDto cursoFiltroDto) throws Exception {
+        PesquisarCursoCasoUso casoUso = new PesquisarCursoCasoUso(cursoRepositorioJpa, cursoFiltroDto.getSigla(), cursoFiltroDto.getNome());
+        return ResponseEntity.status(HttpStatus.OK).body(casoUso.pesquisarCursos(pageable));
     }
 
     @Override

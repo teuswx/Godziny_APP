@@ -7,12 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.cefet.godziny.api.atividade.AtividadeAtualizarDto;
+import com.cefet.godziny.api.atividade.AtividadeFiltroDto;
 import com.cefet.godziny.api.atividade.AtividadeDto;
 import com.cefet.godziny.api.atividade.AtividadeRecuperarDto;
 import com.cefet.godziny.api.atividade.IAtividadeApi;
 import com.cefet.godziny.domain.casouso.atividade.AtualizarAtivdadeCasoUso;
 import com.cefet.godziny.domain.casouso.atividade.CriarAtividadeCasoUso;
 import com.cefet.godziny.domain.casouso.atividade.ListarAtividadeCasoUso;
+import com.cefet.godziny.domain.casouso.atividade.PesquisarAtividadeCasoUso;
 import com.cefet.godziny.domain.casouso.atividade.RemoverAtividadeCasoUso;
 import com.cefet.godziny.infraestrutura.persistencia.atividade.AtividadeRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.atividade.arquivo.ArquivoRepositorioJpa;
@@ -49,9 +51,9 @@ public class AtividadeControle implements IAtividadeApi {
     }
 
     @Override
-    public ResponseEntity<Page<AtividadeRecuperarDto>> listAtividades(Pageable pageable) {
-        ListarAtividadeCasoUso casoUso = new ListarAtividadeCasoUso(atividadeRepositorioJpa, UUID.randomUUID());
-        return  ResponseEntity.status(HttpStatus.OK).body(casoUso.listarAtividades(pageable));
+    public ResponseEntity<Page<AtividadeRecuperarDto>> pesquisarAtividade(Pageable pageable, AtividadeFiltroDto atividadeFiltroDto) throws Exception {
+        PesquisarAtividadeCasoUso casoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, atividadeFiltroDto.getUsuarioNome(), atividadeFiltroDto.getTitulo(), atividadeFiltroDto.getStatus(), atividadeFiltroDto.getCategoria());
+        return ResponseEntity.status(HttpStatus.OK).body(casoUso.pesquisarAtividade(pageable));
     }
 
     @Override

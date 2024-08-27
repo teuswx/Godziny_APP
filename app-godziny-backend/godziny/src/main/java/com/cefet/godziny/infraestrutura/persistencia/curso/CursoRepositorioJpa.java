@@ -4,6 +4,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import com.cefet.godziny.domain.porta.curso.ICursoRepositorio;
@@ -37,8 +38,8 @@ public class CursoRepositorioJpa implements ICursoRepositorio {
     }
 
     @Override
-    public Page<CursoEntidade> listCursos(Pageable pageable) {
-        return repositorio.findAll(pageable);
+    public Page<CursoEntidade> listCursos(Specification<CursoEntidade> specification, Pageable pageable) {
+        return repositorio.findAll(specification, pageable);
     }
 
     @Override

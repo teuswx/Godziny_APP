@@ -2,8 +2,6 @@ package com.cefet.godziny.domain.casouso.atividade;
 
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import com.cefet.godziny.api.atividade.AtividadeRecuperarDto;
 import com.cefet.godziny.infraestrutura.persistencia.atividade.AtividadeEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.atividade.AtividadeRepositorioJpa;
@@ -28,6 +26,7 @@ public class ListarAtividadeCasoUso {
         return AtividadeRestConverter.EntidadeToAtividadeRecuperarDto(entidade);
     }
 
+    /*
     public Page<AtividadeRecuperarDto> listarAtividades(Pageable pageable) {
         Page<AtividadeRecuperarDto> pageAtividadeDto = atividadeRepositorioJpa.listAtividades(pageable).map(
             atividadeEntidade -> AtividadeRestConverter.EntidadeToAtividadeRecuperarDto(
@@ -35,13 +34,13 @@ public class ListarAtividadeCasoUso {
         ));
         return pageAtividadeDto;
     }
-
+*/
     private AtividadeRecuperarDto createAtividadeRecuperarDto(AtividadeEntidade atividadeEntidade){
         AtividadeRecuperarDto dto = new  AtividadeRecuperarDto();
         dto.setId(atividadeEntidade.getId());
         dto.setUsuario(UsuarioRestConverter.EntidadeToUsuarioRecuperarDto(atividadeEntidade.getUsuario()));
         dto.setCategoria(CategoriaRestConverter.EntidadeToCategoriaRecuperarDto(atividadeEntidade.getCategoria()));
-        dto.setTitulo(atividadeEntidade.getNome());
+        dto.setTitulo(atividadeEntidade.getTitulo());
         dto.setCreatedAt(atividadeEntidade.getCreatedAt());
         dto.setStatus(atividadeEntidade.getStatus());
         dto.setArquivoId(atividadeEntidade.getArquivo().getId());

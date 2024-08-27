@@ -3,10 +3,12 @@ package com.cefet.godziny.infraestrutura.rest.usuario;
 import org.springframework.web.bind.annotation.RestController;
 import com.cefet.godziny.api.usuario.IUsuarioApi;
 import com.cefet.godziny.api.usuario.UsuarioDto;
+import com.cefet.godziny.api.usuario.UsuarioFiltroDto;
 import com.cefet.godziny.api.usuario.UsuarioRecuperarDto;
 import com.cefet.godziny.domain.casouso.usuario.AtualizarUsuarioCasoUso;
 import com.cefet.godziny.domain.casouso.usuario.CriarUsuarioCasoUso;
 import com.cefet.godziny.domain.casouso.usuario.ListarUsuarioCasoUso;
+import com.cefet.godziny.domain.casouso.usuario.PesquisarUsuarioCasoUso;
 import com.cefet.godziny.domain.casouso.usuario.RemoverUsuarioCasoUso;
 import com.cefet.godziny.infraestrutura.persistencia.atividade.AtividadeRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoRepositorioJpa;
@@ -46,9 +48,9 @@ public class UsuarioControle implements IUsuarioApi{
     }
 
     @Override
-    public ResponseEntity<Page<UsuarioRecuperarDto>> listUsuarios(Pageable pageable) {
-        ListarUsuarioCasoUso casoUso = new ListarUsuarioCasoUso(usuarioRepositorioJpa, -1);
-        return ResponseEntity.status(HttpStatus.OK).body(casoUso.listarUsuarios(pageable));
+    public ResponseEntity<Page<UsuarioRecuperarDto>> pesquisarUsuarios(Pageable pageable, UsuarioFiltroDto usuarioFiltroDto) throws Exception {
+        PesquisarUsuarioCasoUso casoUso = new PesquisarUsuarioCasoUso(usuarioRepositorioJpa, cursoRepositorioJpa, usuarioFiltroDto.getMatricula(), usuarioFiltroDto.getCursoSigla(), usuarioFiltroDto.getNome());
+        return ResponseEntity.status(HttpStatus.OK).body(casoUso.pesquisarUsuarios(pageable));
     }
 
     @Override

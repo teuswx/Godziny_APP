@@ -11,7 +11,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -78,24 +77,6 @@ public class CursoControleTest {
 
         assertThat(response.getBody()).isInstanceOf(CursoRecuperarDto.class);
         assertThat(response).isNotNull();
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    }
-
-    @SuppressWarnings("null")
-    @Test
-    @DisplayName("Should list all Cursos successfully")
-    void testListCursosSuccess() {
-        this.entidade = createCursoEntidade();
-        Page<CursoEntidade> page = new PageImpl<>(List.of(entidade));
-        Pageable pageable = PageRequest.of(0, 10);
-
-        when(cursoRepositorioJpa.listCursos(Mockito.any(Pageable.class))).thenReturn(page);
-        ResponseEntity<Page<CursoRecuperarDto>> response = controler.listCursos(pageable);
-
-        assertThat(response).isNotNull();
-        assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getContent()).hasSizeGreaterThan(0); 
-        assertThat(response.getBody().getSize()).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 

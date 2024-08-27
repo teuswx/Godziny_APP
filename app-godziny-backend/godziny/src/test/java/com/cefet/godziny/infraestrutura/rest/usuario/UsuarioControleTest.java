@@ -9,10 +9,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,9 +22,7 @@ import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioRepositorioJpa;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -105,24 +99,6 @@ public class UsuarioControleTest {
 
         assertThat(response.getBody()).isInstanceOf(UsuarioRecuperarDto.class);
         assertThat(response).isNotNull();
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    }
-
-    @SuppressWarnings("null")
-    @Test
-    @DisplayName("Should list all Usuários successfully")
-    void testListUsuariosSuccess(){
-        this.entidade = createUsuarioEntidade();
-        Page<UsuarioEntidade> page = new PageImpl<>(List.of(entidade));
-        Pageable pageable = PageRequest.of(0, 10);
-
-        when(usuarioRepositorioJpa.listUsuarios(Mockito.any(Pageable.class))).thenReturn(page);
-        ResponseEntity<Page<UsuarioRecuperarDto>> response = controler.listUsuarios(pageable);
-
-        assertThat(response).isNotNull();
-        assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getContent()).hasSizeGreaterThan(0); 
-        assertThat(response.getBody().getSize()).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 

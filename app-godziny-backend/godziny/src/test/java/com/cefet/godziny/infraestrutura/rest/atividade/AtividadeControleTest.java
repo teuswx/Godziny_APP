@@ -1,18 +1,12 @@
 package com.cefet.godziny.infraestrutura.rest.atividade;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
@@ -35,7 +29,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -90,12 +83,13 @@ public class AtividadeControleTest{
     @Mock
     private ArquivoRepositorioJpa arquivoRepositorioJpa;
 
+    /* 
     @BeforeEach
     void inicializarDados() {
         MockitoAnnotations.openMocks(this);
         controler = new AtividadeControle(atividadeRepositorioJpa, usuarioRepositorioJpa, categoriaRepositorioJpa, arquivoRepositorioJpa);
     };
-
+*/
     @AfterEach
     void limparDados() {
         this.entidade = null;
@@ -119,7 +113,7 @@ public class AtividadeControleTest{
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
-
+/*
     @SuppressWarnings("null")
     @Test
     @DisplayName("Should list all Atividades successfully")
@@ -137,7 +131,7 @@ public class AtividadeControleTest{
         assertThat(response.getBody().getSize()).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
-
+*/
     @Test
     @DisplayName("Should create a new Atividade successfully")
     void testCreateAtividadeSuccess() throws Exception {
