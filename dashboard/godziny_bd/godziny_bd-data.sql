@@ -2,6 +2,7 @@ select * from tb_usuario;
 
 -- Inserir usuários ADM
 INSERT INTO tb_usuario (matricula, created_at, email, senha, nome, tipo) VALUES
+(1, '2024-07-10T00:16:18', 'luanlul2010cpp@professor.com', '$2a$10$.jiiRklWLqFA//YiGhNUteIcBLrpKU.qtmmUfRq3Xtqy.Cjgykzq2', 'Lulu LOL', 'ADM'),
 (5, '2024-07-10T00:16:18', 'maria.silva@professor.com', 'senha001', 'Maria Silva', 'ADM'),
 (6, '2024-07-10T00:16:18', 'joao.santos@professor.com', 'senha002', 'João Santos', 'ADM'),
 (7, '2024-07-10T00:16:18', 'lucas.oliveira@professor.com', 'senha003', 'Lucas Oliveira', 'ADM'),
@@ -12,7 +13,7 @@ INSERT INTO tb_usuario (matricula, created_at, email, senha, nome, tipo) VALUES
 
 -- Inserir cursos
 INSERT INTO tb_curso (id, sigla, nome, carga_horaria_complementar, coordenador_id) VALUES
-('7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'ENG-COMP', 'Engenharia da Computação', 420, 1),
+('7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'ENG-COMP', 'Engenharia da Computação', 420, 5),
 ('3a8d56d5-6f3e-4a1f-9b2e-c4f9aefc8e3c', 'ENG-MECA', 'Engenharia Mecatrônica', 420, 6),
 ('29f9c78e-5267-46b3-a843-9f0a0efb7c6f', 'ENG-CIV', 'Engenharia Civil', 420, 6),
 ('c7a2b0c7-1f4b-4df1-bd7f-4b46c8a2bf70', 'MODA', 'Bacharelado em Moda', 450, 7),
@@ -25,15 +26,16 @@ INSERT INTO tb_curso (id, sigla, nome, carga_horaria_complementar, coordenador_i
 
 -- Inserir usuários Não Administradores
 INSERT INTO tb_usuario (matricula, created_at, curso_id, email, senha, nome, tipo) VALUES
-(11, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'victor.souza@aluno.com', 'senha011', 'Victor Souza', 'NORMAL'),
-(12, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'larissa.oliveira@aluno.com', 'senha012', 'Larissa Oliveira', 'NORMAL'),
-(13, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'danilo.pereira@aluno.com', 'senha013', 'Danilo Pereira', 'NORMAL'),
-(14, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'beatriz.goncalves@aluno.com', 'senha014', 'Beatriz Gonçalves', 'NORMAL'),
-(15, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'carlos.martins@aluno.com', 'senha015', 'Carlos Martins', 'NORMAL'),
-(16, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'sabrina.farias@aluno.com', 'senha016', 'Sabrina Farias', 'NORMAL'),
-(17, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'jose.augusto@aluno.com', 'senha017', 'José Augusto', 'NORMAL'),
-(18, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'amanda.santos@aluno.com', 'senha018', 'Amanda Santos', 'NORMAL'),
-(19, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'gabriel.melo@aluno.com', 'senha019', 'Gabriel Melo', 'NORMAL'),
+(11, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'werneckX.filipe@aluno.com', '$2a$10$T8aFar2CUy/a13cys3rI.OYroKRTL/7y0kAod2WANHVCzA7A7n1YG', 'Felipe EKKO Werneck', 'NORMAL'),
+(12, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'victor.souza@aluno.com', 'senha011', 'Victor Souza', 'NORMAL'),
+(13, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'larissa.oliveira@aluno.com', 'senha012', 'Larissa Oliveira', 'NORMAL'),
+(14, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'danilo.pereira@aluno.com', 'senha013', 'Danilo Pereira', 'NORMAL'),
+(15, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'beatriz.goncalves@aluno.com', 'senha014', 'Beatriz Gonçalves', 'NORMAL'),
+(16, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'carlos.martins@aluno.com', 'senha015', 'Carlos Martins', 'NORMAL'),
+(17, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'sabrina.farias@aluno.com', 'senha016', 'Sabrina Farias', 'NORMAL'),
+(18, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'jose.augusto@aluno.com', 'senha017', 'José Augusto', 'NORMAL'),
+(19, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'amanda.santos@aluno.com', 'senha018', 'Amanda Santos', 'NORMAL'),
+(20, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'gabriel.melo@aluno.com', 'senha019', 'Gabriel Melo', 'NORMAL'),
 (21, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'juliana.reis@aluno.com', 'senha020', 'Juliana Reis', 'NORMAL'),
 (22, '2024-07-10T00:16:18', '3a8d56d5-6f3e-4a1f-9b2e-c4f9aefc8e3c', 'renato.souza@aluno.com', 'senha021', 'Renato Souza', 'NORMAL'),
 (23, '2024-07-10T00:16:18', '3a8d56d5-6f3e-4a1f-9b2e-c4f9aefc8e3c', 'julio.borges@aluno.com', 'senha022', 'Julio Borges', 'NORMAL'),
