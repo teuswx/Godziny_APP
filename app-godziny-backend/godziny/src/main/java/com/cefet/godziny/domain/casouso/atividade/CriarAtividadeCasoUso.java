@@ -1,6 +1,8 @@
 package com.cefet.godziny.domain.casouso.atividade;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,7 +44,8 @@ public class CriarAtividadeCasoUso {
         if (this.titulo.length() < 3 || this.titulo.length() > 500) {
             throw new CriarAtividadeIncompletaException("O título da atividade deve ter entre 3 e 500 caracteres");
         }
-        if (this.createdAt.isAfter(LocalDateTime.now())) {
+        LocalDateTime now = ZonedDateTime.now(ZoneOffset.UTC).toLocalDateTime();
+        if (this.createdAt.isAfter(now)) {
             throw new CriarAtividadeIncompletaException("A data de criação da atividade deve ser menor ou igual à data e hora atuais");
         }
     }
