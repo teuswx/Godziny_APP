@@ -51,7 +51,7 @@ public class AtividadeControle implements IAtividadeApi {
     }
 
     @Override
-    public ResponseEntity<Page<AtividadeRecuperarDto>> pesquisarAtividade(Pageable pageable, AtividadeFiltroDto atividadeFiltroDto) throws Exception {
+    public ResponseEntity<Page<AtividadeRecuperarDto>> pesquisarAtividades(Pageable pageable, AtividadeFiltroDto atividadeFiltroDto) throws Exception {
         PesquisarAtividadeCasoUso casoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, atividadeFiltroDto.getUsuarioNome(), atividadeFiltroDto.getTitulo(), atividadeFiltroDto.getStatus(), atividadeFiltroDto.getCategoria());
         return ResponseEntity.status(HttpStatus.OK).body(casoUso.pesquisarAtividade(pageable));
     }

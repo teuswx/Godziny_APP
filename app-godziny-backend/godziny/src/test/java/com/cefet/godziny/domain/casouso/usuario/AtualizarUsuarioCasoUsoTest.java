@@ -174,8 +174,8 @@ public class AtualizarUsuarioCasoUsoTest {
     }
 
     @Test
-    @DisplayName("Try to update an Usuario and return an exception because the EMAIL is already in the database")
-    void testeAtualizarUsuarioCasoUsoExceptionCase6() {
+    @DisplayName("Try to update an Usuario and return an exception because the EMAIL is already in the database") 
+    void testeAtualizarUsuarioCasoUsoExceptionCase6() throws Exception {
         UsuarioEntidade usuarioEntidade = new UsuarioEntidade(
             888888, 
             createCursoEntidade(),

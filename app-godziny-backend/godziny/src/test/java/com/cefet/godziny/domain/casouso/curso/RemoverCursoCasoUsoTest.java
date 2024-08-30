@@ -53,6 +53,7 @@ public class RemoverCursoCasoUsoTest {
     void limparDados() {
         cursoRepositorioJpa.deleteAll();
         usuarioRepositorioJpa.deleteAll();
+        categoriaRepositorioJpa.deleteAll();
     }
     
 

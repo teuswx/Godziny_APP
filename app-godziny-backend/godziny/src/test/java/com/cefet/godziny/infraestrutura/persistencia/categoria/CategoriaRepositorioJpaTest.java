@@ -14,13 +14,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.ActiveProfiles;
-
 import com.cefet.godziny.constantes.usuario.EnumRecursos;
 import com.cefet.godziny.infraestrutura.exceptions.categoria.CategoriaNaoEncontradaException;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
@@ -43,7 +46,6 @@ public class CategoriaRepositorioJpaTest {
     private static final float PORCENTAGEM_HORAS_MAXIMAS = (float) 0.5;
     private static final float HORAS_MULTIPLICADOR = (float) 0.1;
     private static final String DESCRICAO = "Categoria Descrição Teste";
-    
 
     private Optional<CategoriaEntidade> optional;
     private CategoriaEntidade entidade;
@@ -123,23 +125,67 @@ public class CategoriaRepositorioJpaTest {
         assertThat(result).contains(entidade);
         assertThat(result).isNotEmpty();
     }
-/* 
+
+
     @Test
-    @DisplayName("Should list all Categorias successfully")
+    @DisplayName("Search for an Categoria by NOME and return an existing successfully from DataBase")
+    void testFindByNomeSuccess() throws Exception {
+        this.optional = createOptionalCategoria();
+
+        when(categoriaRepositorioJpaSpring.findByNome(Mockito.any())).thenReturn(this.optional);
+        CategoriaEntidade result = categoriaRepositorio.findByNome(NOME);
+
+        assertThat(result).isInstanceOf(CategoriaEntidade.class);
+        assertThat(result).isNotNull();
+    }
+
+    @Test
+    @DisplayName("Search for an Categoria by NOME and return an excepiton because the NOME doesn't exist")
+    void testFindByNomeCategoriaNaoEncontradoException() throws Exception {
+        this.optional = Optional.empty();
+
+        when(categoriaRepositorioJpaSpring.findByNome(Mockito.any())).thenReturn(this.optional);
+        Exception thrown = assertThrows(CategoriaNaoEncontradaException.class, () -> {
+            categoriaRepositorio.findByNome(NOME);
+        });
+        
+        assertThat(thrown).isNotNull();
+        assertThat(thrown.getMessage()).isEqualTo("Categoria não encontrada na base de dados");
+    }
+
+    @Test
+    @DisplayName("Search for an Categoria by NOME and return an existing Optional successfully from DataBase")
+    void testFindByNomeOptionalSuccess() throws Exception {
+        this.optional = createOptionalCategoria();
+
+        when(categoriaRepositorioJpaSpring.findByNome(Mockito.anyString())).thenReturn(this.optional);
+        Optional<CategoriaEntidade> result = categoriaRepositorio.findByNomeOptional(NOME);
+
+        assertThat(result).isNotNull();
+        assertThat(result).isPresent();
+        assertThat(result.get()).isInstanceOf(CategoriaEntidade.class);
+        assertThat(result.get()).isEqualTo(this.optional.get());
+        assertThat(result.get().getNome()).isEqualTo(NOME);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    @DisplayName("Should list all Categorias successfully with Specification")
     void testListCategoriasSuccess() {
         this.entidade = createCategoriaEntidade();
         Page<CategoriaEntidade> page = new PageImpl<>(List.of(this.entidade));
         Pageable pageable = PageRequest.of(0, 10);
+        Specification<CategoriaEntidade> specification = Specification.where(null);
 
-        when(categoriaRepositorioJpaSpring.findAll(Mockito.any(Pageable.class))).thenReturn(page);
-        Page<CategoriaEntidade> result = categoriaRepositorio.listCategorias(pageable);
+        when(categoriaRepositorioJpaSpring.findAll(Mockito.any(Specification.class), Mockito.any(Pageable.class))).thenReturn(page);
+        Page<CategoriaEntidade> result = categoriaRepositorio.listCategorias(specification, pageable);
 
         assertThat(result).isNotNull();
         assertThat(result).isInstanceOf(Page.class);
-        assertThat(result.getSize()).isNotNull();
-        assertThat(result).hasSizeGreaterThan(0); 
+        assertThat(result.getSize()).isEqualTo(1);
+        assertThat(result.getContent()).contains(this.entidade);
     }
-*/
+
     @Test
     @DisplayName("Should create a Categoria successfully")
     void testCreateCategoriaSuccess() {

@@ -11,9 +11,9 @@ public interface IUsuarioRepositorio{
 
     UsuarioEntidade findById(Integer matricula) throws Exception;
 
-    UsuarioEntidade findByEmail(String email);
+    UsuarioEntidade findByEmail(String email) throws Exception;
 
-    UsuarioEntidade findByNome(String nome);
+    UsuarioEntidade findByNome(String nome) throws Exception;
 
     Optional<UsuarioEntidade> findByEmailOptional(String email);
 

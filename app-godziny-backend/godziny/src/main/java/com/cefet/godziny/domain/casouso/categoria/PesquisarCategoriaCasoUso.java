@@ -22,8 +22,7 @@ public class PesquisarCategoriaCasoUso {
     @NotNull(message = "O nome da categoria é obrigatória")
     private String nome;
     
-    public void validarPesquisa() throws Exception {
-    }
+    public void validarPesquisa() throws Exception {}
 
     public Page<CategoriaRecuperarDto> pesquisarCategoria(Pageable pageable) {
         Specification<CategoriaEntidade> specification = Specification.where(null);

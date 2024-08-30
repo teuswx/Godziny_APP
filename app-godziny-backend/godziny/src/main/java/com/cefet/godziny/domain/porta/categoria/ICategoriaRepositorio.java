@@ -16,7 +16,7 @@ public interface ICategoriaRepositorio {
 
     List<CategoriaEntidade> findByCurso(CursoEntidade curso);
 
-    CategoriaEntidade findByNome(String nome);
+    CategoriaEntidade findByNome(String nome) throws Exception;
 
     Optional<CategoriaEntidade> findByNomeOptional(String nome);
 

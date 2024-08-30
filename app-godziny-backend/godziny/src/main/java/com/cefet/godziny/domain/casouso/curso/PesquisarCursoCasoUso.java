@@ -21,6 +21,8 @@ public class PesquisarCursoCasoUso {
 
     @NotNull(message = "O nome do curso é obrigatório")
     private String nome;
+
+    public void validarPesquisa() throws Exception {}
     
     public Page<CursoRecuperarDto> pesquisarCursos(Pageable pageable) {
         Specification<CursoEntidade> specification = Specification.where(null);

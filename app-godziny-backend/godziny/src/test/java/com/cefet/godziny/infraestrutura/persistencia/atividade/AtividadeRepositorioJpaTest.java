@@ -14,6 +14,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.ActiveProfiles;
 import com.cefet.godziny.constantes.atividade.EnumStatus;
 import com.cefet.godziny.constantes.usuario.EnumRecursos;
@@ -137,23 +142,25 @@ public class AtividadeRepositorioJpaTest {
         assertThat(result).contains(entidade);
         assertThat(result).isNotEmpty();
     }
-/*
+
+    @SuppressWarnings("unchecked")
     @Test
-    @DisplayName("Should list all Atividades successfully")
+    @DisplayName("Should list all Atividades successfully with Specification")
     void testListAtividadesSuccess() {
         this.entidade = createAtividadeEntidade();
         Page<AtividadeEntidade> page = new PageImpl<>(List.of(this.entidade));
         Pageable pageable = PageRequest.of(0, 10);
+        Specification<AtividadeEntidade> specification = Specification.where(null);
 
-        when(atividadeRepositorioJpaSpring.findAll(Mockito.any(Pageable.class))).thenReturn(page);
-        Page<AtividadeEntidade> result = atividadeRepositorio.listAtividades(pageable);
+        when(atividadeRepositorioJpaSpring.findAll(Mockito.any(Specification.class), Mockito.any(Pageable.class))).thenReturn(page);
+        Page<AtividadeEntidade> result = atividadeRepositorio.listAtividades(specification, pageable);
 
         assertThat(result).isNotNull();
         assertThat(result).isInstanceOf(Page.class);
-        assertThat(result.getSize()).isNotNull();
-        assertThat(result).hasSizeGreaterThan(0); 
+        assertThat(result.getSize()).isEqualTo(1);
+        assertThat(result.getContent()).contains(this.entidade);
     }
-*/
+
     @Test
     @DisplayName("Search for an Atividade and return an excepiton because the ID doesn't exist")
     void testFindByIdAtividadeNaoEncontradaException() throws Exception {

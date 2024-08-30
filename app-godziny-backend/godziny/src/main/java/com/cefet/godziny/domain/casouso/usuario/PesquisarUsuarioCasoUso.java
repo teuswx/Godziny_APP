@@ -37,7 +37,7 @@ public class PesquisarUsuarioCasoUso {
     public Page<UsuarioRecuperarDto> pesquisarUsuarios(Pageable pageable) {
         Specification<UsuarioEntidade> specification = Specification.where(null);
     
-        if (nome != null && !nome.isEmpty()) {
+        if (nome != null) {
             specification = specification.and((root, query, criteriaBuilder) -> 
                 criteriaBuilder.like(root.get("nome"), "%" + nome + "%"));
         }

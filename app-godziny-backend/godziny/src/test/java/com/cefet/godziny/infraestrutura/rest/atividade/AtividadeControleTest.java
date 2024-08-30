@@ -1,18 +1,26 @@
 package com.cefet.godziny.infraestrutura.rest.atividade;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import com.cefet.godziny.api.atividade.AtividadeAtualizarDto;
 import com.cefet.godziny.api.atividade.AtividadeDto;
+import com.cefet.godziny.api.atividade.AtividadeFiltroDto;
 import com.cefet.godziny.api.atividade.AtividadeRecuperarDto;
 import com.cefet.godziny.constantes.atividade.EnumStatus;
 import com.cefet.godziny.constantes.usuario.EnumRecursos;
@@ -29,6 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -82,14 +91,13 @@ public class AtividadeControleTest{
 
     @Mock
     private ArquivoRepositorioJpa arquivoRepositorioJpa;
-
-    /* 
+ 
     @BeforeEach
     void inicializarDados() {
         MockitoAnnotations.openMocks(this);
         controler = new AtividadeControle(atividadeRepositorioJpa, usuarioRepositorioJpa, categoriaRepositorioJpa, arquivoRepositorioJpa);
     };
-*/
+
     @AfterEach
     void limparDados() {
         this.entidade = null;
@@ -113,17 +121,18 @@ public class AtividadeControleTest{
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
-/*
-    @SuppressWarnings("null")
+
+    @SuppressWarnings({ "null", "unchecked" })
     @Test
-    @DisplayName("Should list all Atividades successfully")
-    void testListAtividadesSuccess() {
+    @DisplayName("Should search all Atividades successfully")
+    void testPesquisarAtividadesSuccess() throws Exception {
         this.entidade = createAtividadeEntidade();
+        AtividadeFiltroDto filtroDto = new AtividadeFiltroDto();
         Page<AtividadeEntidade> page = new PageImpl<>(List.of(entidade));
         Pageable pageable = PageRequest.of(0, 10);
 
-        when(atividadeRepositorioJpa.listAtividades(Mockito.any(Pageable.class))).thenReturn(page);
-        ResponseEntity<Page<AtividadeRecuperarDto>> response = controler.listAtividades(pageable);
+        when(atividadeRepositorioJpa.listAtividades(Mockito.any(Specification.class), Mockito.any(Pageable.class))).thenReturn(page);
+        ResponseEntity<Page<AtividadeRecuperarDto>> response = controler.pesquisarAtividades(pageable, filtroDto);
 
         assertThat(response).isNotNull();
         assertThat(response.getBody()).isNotNull();
@@ -131,7 +140,7 @@ public class AtividadeControleTest{
         assertThat(response.getBody().getSize()).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
-*/
+
     @Test
     @DisplayName("Should create a new Atividade successfully")
     void testCreateAtividadeSuccess() throws Exception {

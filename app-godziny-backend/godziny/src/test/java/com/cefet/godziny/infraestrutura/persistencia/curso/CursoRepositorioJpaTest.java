@@ -1,6 +1,7 @@
 package com.cefet.godziny.infraestrutura.persistencia.curso;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
@@ -12,12 +13,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.ActiveProfiles;
-
 import com.cefet.godziny.constantes.usuario.EnumRecursos;
 import com.cefet.godziny.infraestrutura.exceptions.curso.CursoNaoEncontradoException;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
@@ -110,6 +114,24 @@ public class CursoRepositorioJpaTest {
         
         assertThat(thrown).isNotNull();
         assertThat(thrown.getMessage()).isEqualTo("Curso não encontrado na base de dados");
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    @DisplayName("Should list all Cursos successfully with Specification")
+    void testListCursosSuccess() {
+        this.entidade = createCursoEntidade();
+        Page<CursoEntidade> page = new PageImpl<>(List.of(this.entidade));
+        Pageable pageable = PageRequest.of(0, 10);
+        Specification<CursoEntidade> specification = Specification.where(null);
+
+        when(cursoRepositorioJpaSpring.findAll(Mockito.any(Specification.class), Mockito.any(Pageable.class))).thenReturn(page);
+        Page<CursoEntidade> result = cursoRepositorio.listCursos(specification, pageable);
+
+        assertThat(result).isNotNull();
+        assertThat(result).isInstanceOf(Page.class);
+        assertThat(result.getSize()).isEqualTo(1);
+        assertThat(result.getContent()).contains(this.entidade);
     }
 
     @Test

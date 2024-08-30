@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.ActiveProfiles;
 import com.cefet.godziny.constantes.usuario.EnumRecursos;
 import com.cefet.godziny.infraestrutura.exceptions.usuario.UsuarioNaoEncontradoException;
@@ -107,6 +108,61 @@ public class UsuarioRepositorioJpaTest {
     }
 
     @Test
+    @DisplayName("Search for an Usuario by EMAIL and return an excepiton because the EMAIL doesn't exist")
+    void testFindByEmailUsuarioNaoEncontradoException() throws Exception {
+        this.optional = Optional.empty();
+
+        when(usuarioRepositorioJpaSpring.findByEmail(Mockito.any())).thenReturn(this.optional);
+        Exception thrown = assertThrows(UsuarioNaoEncontradoException.class, () -> {
+            usuarioRepositorio.findByEmail(EMAIL);
+        });
+        
+        assertThat(thrown).isNotNull();
+        assertThat(thrown.getMessage()).isEqualTo("Usuário não encontrado na base de dados");
+    }
+
+    @Test
+    @DisplayName("Search for an Usuario by NOME and return an existing successfully from DataBase")
+    void testFindByNomeSuccess() throws Exception {
+        this.optional = createOptionalUsuario();
+
+        when(usuarioRepositorioJpaSpring.findByNome(Mockito.any())).thenReturn(this.optional);
+        UsuarioEntidade result = usuarioRepositorio.findByNome(NOME);
+
+        assertThat(result).isInstanceOf(UsuarioEntidade.class);
+        assertThat(result).isNotNull();
+    }
+
+    @Test
+    @DisplayName("Search for an Usuario by NOME and return an excepiton because the NOME doesn't exist")
+    void testFindByNomeUsuarioNaoEncontradoException() throws Exception {
+        this.optional = Optional.empty();
+
+        when(usuarioRepositorioJpaSpring.findByNome(Mockito.any())).thenReturn(this.optional);
+        Exception thrown = assertThrows(UsuarioNaoEncontradoException.class, () -> {
+            usuarioRepositorio.findByNome(NOME);
+        });
+        
+        assertThat(thrown).isNotNull();
+        assertThat(thrown.getMessage()).isEqualTo("Usuário não encontrado na base de dados");
+    }
+
+    @Test
+    @DisplayName("Search for  an Usuario by NOME and return an existing Optional successfully from DataBase")
+    void testFindByNomeOptionalSuccess() throws Exception {
+        this.optional = createOptionalUsuario();
+
+        when(usuarioRepositorioJpaSpring.findByNome(Mockito.anyString())).thenReturn(this.optional);
+        Optional<UsuarioEntidade> result = usuarioRepositorio.findByNomeOptional(NOME);
+
+        assertThat(result).isNotNull();
+        assertThat(result).isPresent();
+        assertThat(result.get()).isInstanceOf(UsuarioEntidade.class);
+        assertThat(result.get()).isEqualTo(this.optional.get());
+        assertThat(result.get().getNome()).isEqualTo(NOME);
+    }
+
+    @Test
     @DisplayName("Search for  an Usuario by EMAIL and return an existing Optional successfully from DataBase")
     void testFindByEmailOptionalSuccess() throws Exception {
         this.optional = createOptionalUsuario();
@@ -121,33 +177,23 @@ public class UsuarioRepositorioJpaTest {
         assertThat(result.get().getEmail()).isEqualTo(EMAIL);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
-    @DisplayName("Search for an Usuario by EMAIL and return null because the EMAIL doesn't exist")
-    void testFindByEmailNotFound() {
-        this.optional = Optional.empty();
-
-        when(usuarioRepositorioJpaSpring.findByEmail(Mockito.anyString())).thenReturn(this.optional);
-        UsuarioEntidade result = usuarioRepositorio.findByEmail("");
-
-        assertThat(result).isNull();
-    }
-
-    /*Testes excluidos pq os metodos foram excluidos
-    @Test
-    @DisplayName("Should list all Usuarios successfully")
+    @DisplayName("Should list all Usuarios successfully with Specification")
     void testListUsuariosSuccess() {
         this.entidade = createUsuarioEntidade();
         Page<UsuarioEntidade> page = new PageImpl<>(List.of(this.entidade));
         Pageable pageable = PageRequest.of(0, 10);
+        Specification<UsuarioEntidade> specification = Specification.where(null);
 
-        when(usuarioRepositorioJpaSpring.findAll(Mockito.any(Pageable.class))).thenReturn(page);
-        Page<UsuarioEntidade> result = usuarioRepositorio.listUsuarios(pageable);
+        when(usuarioRepositorioJpaSpring.findAll(Mockito.any(Specification.class), Mockito.any(Pageable.class))).thenReturn(page);
+        Page<UsuarioEntidade> result = usuarioRepositorio.listUsuarios(specification, pageable);
 
         assertThat(result).isNotNull();
         assertThat(result).isInstanceOf(Page.class);
-        assertThat(result.getSize()).isNotNull();
-        assertThat(result).hasSizeGreaterThan(0); 
-    }*/
+        assertThat(result.getSize()).isEqualTo(1);
+        assertThat(result.getContent()).contains(this.entidade);
+    }
 
     @Test
     @DisplayName("Should list all Usuarios by Curso successfully")
@@ -176,7 +222,6 @@ public class UsuarioRepositorioJpaTest {
         assertThat(result).isNotNull();
         assertThat(result).isInstanceOf(Integer.class);
         assertThat(result).isEqualTo(MATRICULA);
-
     }
 
     @Test

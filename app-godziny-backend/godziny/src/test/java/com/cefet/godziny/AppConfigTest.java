@@ -8,11 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import com.cefet.godziny.configs.AppConfig;
 import com.cefet.godziny.infraestrutura.exceptions.usuario.UsuarioNaoEncontradoException;
+import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioRepositorioJpa;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -37,6 +39,22 @@ public class AppConfigTest {
     @AfterEach
     void clean() {
         usuarioRepositorioJpa.deleteAll();
+    }
+
+    @Test
+    @DisplayName("Should find an Usuario by EMAIL")
+    void testUserDetailsServiceFindsUserByEmail() {
+        UsuarioEntidade usuarioMock = new UsuarioEntidade();
+        usuarioMock.setEmail("existent@example.com");
+
+        when(usuarioRepositorioJpa.findByEmailOptional("existent@example.com"))
+            .thenReturn(Optional.of(usuarioMock));
+        UserDetailsService userDetailsService = appConfig.userDetailsService();
+        UserDetails userDetails = userDetailsService.loadUserByUsername("existent@example.com");
+
+        assertThat(userDetails).isNotNull();
+        assertThat(userDetails).isInstanceOf(UserDetails.class);
+        assertThat(userDetails.getUsername()).isEqualTo("existent@example.com");
     }
 
     @Test

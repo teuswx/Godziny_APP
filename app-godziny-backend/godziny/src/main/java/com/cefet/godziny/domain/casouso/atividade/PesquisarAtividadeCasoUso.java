@@ -29,8 +29,7 @@ public class PesquisarAtividadeCasoUso {
     @NotNull(message = "O nome da categoria é obrigatória")
     private String categoria;
     
-    public void validarPesquisa() throws Exception {
-    }
+    public void validarPesquisa() throws Exception {}
 
     public Page<AtividadeRecuperarDto> pesquisarAtividade(Pageable pageable) {
         Specification<AtividadeEntidade> specification = Specification.where(null);

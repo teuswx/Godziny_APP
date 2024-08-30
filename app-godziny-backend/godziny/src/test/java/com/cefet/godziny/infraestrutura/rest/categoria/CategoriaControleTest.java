@@ -9,9 +9,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.cefet.godziny.api.categoria.CategoriaDto;
+import com.cefet.godziny.api.categoria.CategoriaFiltroDto;
 import com.cefet.godziny.api.categoria.CategoriaRecuperarDto;
 import com.cefet.godziny.constantes.usuario.EnumRecursos;
 import com.cefet.godziny.infraestrutura.persistencia.atividade.AtividadeRepositorioJpa;
@@ -23,6 +29,7 @@ import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -80,6 +87,25 @@ public class CategoriaControleTest {
 
         assertThat(response.getBody()).isInstanceOf(CategoriaRecuperarDto.class);
         assertThat(response).isNotNull();
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @SuppressWarnings({ "null", "unchecked" })
+    @Test
+    @DisplayName("Should search all Categorias successfully")
+    void testPesquisarCategoriasSuccess() throws Exception {
+        this.entidade = createCategoriaEntidade();
+        CategoriaFiltroDto filtroDto = new CategoriaFiltroDto();
+        Page<CategoriaEntidade> page = new PageImpl<>(List.of(entidade));
+        Pageable pageable = PageRequest.of(0, 10);
+
+        when(categoriaRepositorioJpa.listCategorias(Mockito.any(Specification.class), Mockito.any(Pageable.class))).thenReturn(page);
+        ResponseEntity<Page<CategoriaRecuperarDto>> response = controler.pesquisarCategorias(pageable, filtroDto);
+
+        assertThat(response).isNotNull();
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getContent()).hasSizeGreaterThan(0); 
+        assertThat(response.getBody().getSize()).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 

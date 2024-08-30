@@ -11,10 +11,13 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.cefet.godziny.api.curso.CursoDto;
+import com.cefet.godziny.api.curso.CursoFiltroDto;
 import com.cefet.godziny.api.curso.CursoRecuperarDto;
 import com.cefet.godziny.constantes.usuario.EnumRecursos;
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaRepositorioJpa;
@@ -77,6 +80,25 @@ public class CursoControleTest {
 
         assertThat(response.getBody()).isInstanceOf(CursoRecuperarDto.class);
         assertThat(response).isNotNull();
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @SuppressWarnings({ "null", "unchecked" })
+    @Test
+    @DisplayName("Should search all Cursos successfully")
+    void testPesquisarCursosSuccess() throws Exception {
+        this.entidade = createCursoEntidade();
+        CursoFiltroDto filtroDto = new CursoFiltroDto();
+        Page<CursoEntidade> page = new PageImpl<>(List.of(entidade));
+        Pageable pageable = PageRequest.of(0, 10);
+
+        when(cursoRepositorioJpa.listCursos(Mockito.any(Specification.class), Mockito.any(Pageable.class))).thenReturn(page);
+        ResponseEntity<Page<CursoRecuperarDto>> response = controler.pesquisarCursos(pageable, filtroDto);
+
+        assertThat(response).isNotNull();
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getContent()).hasSizeGreaterThan(0); 
+        assertThat(response.getBody().getSize()).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 

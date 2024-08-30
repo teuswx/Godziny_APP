@@ -46,7 +46,7 @@ public class CategoriaControle implements ICategoriaApi {
     }
     
     @Override
-    public ResponseEntity<Page<CategoriaRecuperarDto>> pesquisarCategoria(Pageable pageable, CategoriaFiltroDto categoriaFiltroDto) throws Exception {
+    public ResponseEntity<Page<CategoriaRecuperarDto>> pesquisarCategorias(Pageable pageable, CategoriaFiltroDto categoriaFiltroDto) throws Exception {
         PesquisarCategoriaCasoUso casoUso = new PesquisarCategoriaCasoUso(categoriaRepositorioJpa, categoriaFiltroDto.getCursoSigla(), categoriaFiltroDto.getNome());
         return ResponseEntity.status(HttpStatus.OK).body(casoUso.pesquisarCategoria(pageable));
     }

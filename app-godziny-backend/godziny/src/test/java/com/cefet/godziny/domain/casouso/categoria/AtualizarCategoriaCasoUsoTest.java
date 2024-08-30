@@ -1,7 +1,6 @@
 package com.cefet.godziny.domain.casouso.categoria;
 
 import static org.mockito.Mockito.when;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,6 @@ import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaReposito
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -276,5 +274,4 @@ public class AtualizarCategoriaCasoUsoTest {
             (float) 1.0, (float) 1.0,
             "Descrição_TESTE");
     }
-
 }

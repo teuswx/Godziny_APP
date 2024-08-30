@@ -150,7 +150,7 @@ public class CriarUsuarioCasoUsoTest {
 
     @Test
     @DisplayName("Try to create an Usuario and return an exception because the EMAIL is already in the database")
-    void testeCriarUsuarioCasoUsoExceptionCase6() {
+    void testeCriarUsuarioCasoUsoExceptionCase6() throws Exception {
         UsuarioEntidade usuarioEntidade = new UsuarioEntidade(
             999999, 
             createCursoEntidade(),

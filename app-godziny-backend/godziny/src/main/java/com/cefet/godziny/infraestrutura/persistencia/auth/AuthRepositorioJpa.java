@@ -32,7 +32,7 @@ public class AuthRepositorioJpa implements IAuthRepositorio{
     }
 
     @Override
-    public AuthResponseDto loginUsuario(AuthDto dto) {
+    public AuthResponseDto loginUsuario(AuthDto dto) throws Exception {
         try{
             authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getSenha())

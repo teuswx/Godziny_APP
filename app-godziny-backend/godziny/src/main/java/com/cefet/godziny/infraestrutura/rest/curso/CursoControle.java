@@ -46,6 +46,7 @@ public class CursoControle implements ICursoApi{
     @Override
     public ResponseEntity<Page<CursoRecuperarDto>> pesquisarCursos(Pageable pageable, CursoFiltroDto cursoFiltroDto) throws Exception {
         PesquisarCursoCasoUso casoUso = new PesquisarCursoCasoUso(cursoRepositorioJpa, cursoFiltroDto.getSigla(), cursoFiltroDto.getNome());
+        casoUso.validarPesquisa();
         return ResponseEntity.status(HttpStatus.OK).body(casoUso.pesquisarCursos(pageable));
     }
 
