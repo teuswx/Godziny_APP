@@ -1,12 +1,19 @@
 package com.cefet.godziny.domain.casouso.atividade;
 
+import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import com.cefet.godziny.api.atividade.AtividadeRecuperarDto;
 import com.cefet.godziny.constantes.atividade.EnumStatus;
+import com.cefet.godziny.constantes.usuario.EnumRecursos;
 import com.cefet.godziny.infraestrutura.persistencia.atividade.AtividadeRepositorioJpa;
+import com.cefet.godziny.infraestrutura.persistencia.curso.CursoRepositorioJpa;
+import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.atividade.AtividadeEntidade;
 import com.cefet.godziny.infraestrutura.rest.atividade.AtividadeRestConverter;
 import jakarta.validation.constraints.NotNull;
@@ -16,6 +23,10 @@ import lombok.*;
 public class PesquisarAtividadeCasoUso {
     @Autowired
     private final AtividadeRepositorioJpa atividadeRepositorioJpa;
+
+    
+    @Autowired
+    private final CursoRepositorioJpa cursoRepositorioJpa;
 
     @NotNull(message = "O nome do usuario é obrigatório")
     private String usuarioNome;
@@ -32,9 +43,12 @@ public class PesquisarAtividadeCasoUso {
     public void validarPesquisa() throws Exception {}
 
     public Page<AtividadeRecuperarDto> pesquisarAtividade(Pageable pageable) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UsuarioEntidade userContext = (UsuarioEntidade) authentication.getPrincipal();
+
         Specification<AtividadeEntidade> specification = Specification.where(null);
     
-        if (usuarioNome != null) {
+        if (usuarioNome != null && userContext.getTipo().equals(EnumRecursos.ADM)) {
             specification = specification.and((root, query, criteriaBuilder) ->
                 criteriaBuilder.like(criteriaBuilder.lower(root.get("usuario").get("nome")), "%" + usuarioNome.toLowerCase() + "%"));
         }
@@ -49,6 +63,17 @@ public class PesquisarAtividadeCasoUso {
         if (status != null) {
             specification = specification.and((root, query, criteriaBuilder) -> 
                 criteriaBuilder.equal(root.get("status"), status));
+        }
+
+        if(userContext.getTipo().equals(EnumRecursos.ADM)){
+            List<UUID> cursoIds = cursoRepositorioJpa.findByCoordenador(userContext.getMatricula());
+            specification = specification.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.in(root.get("categoria").get("curso").get("id")).value(cursoIds));
+
+        }
+        else{
+            specification = specification.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("usuario").get("matricula"), userContext.getMatricula()));
         }
 
         Page<AtividadeRecuperarDto> pageAtividadeRecuperarDto = atividadeRepositorioJpa.listAtividades(specification, pageable)

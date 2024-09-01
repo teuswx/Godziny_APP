@@ -16,8 +16,6 @@ public interface ICategoriaRepositorio {
 
     List<CategoriaEntidade> findByCurso(CursoEntidade curso);
 
-    CategoriaEntidade findByNome(String nome) throws Exception;
-
     Optional<CategoriaEntidade> findByNomeOptional(String nome);
 
     Page<CategoriaEntidade> listCategorias(Specification<CategoriaEntidade> specification, Pageable pageable);

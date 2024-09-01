@@ -24,6 +24,7 @@ import com.cefet.godziny.infraestrutura.persistencia.atividade.AtividadeReposito
 import com.cefet.godziny.infraestrutura.persistencia.atividade.arquivo.ArquivoEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoEntidade;
+import com.cefet.godziny.infraestrutura.persistencia.curso.CursoRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
 import com.cefet.godziny.infraestrutura.rest.atividade.AtividadeRestConverter;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,11 +36,14 @@ public class PesquisarAtividadeCasoUsoTest {
     @Mock
     private AtividadeRepositorioJpa atividadeRepositorioJpa;
 
+    @Mock
+    private CursoRepositorioJpa cursoRepositorioJpa;
+
     private PesquisarAtividadeCasoUso pesquisarAtividadeCasoUso;
 
     @BeforeEach
     void inicializarDados() {
-        pesquisarAtividadeCasoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, "USUARIO_TESTE", "TITULO_TESTE", EnumStatus.SIMULANDO, "CATEGORIA_TESTE");
+        pesquisarAtividadeCasoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, cursoRepositorioJpa, "USUARIO_TESTE", "TITULO_TESTE", EnumStatus.SIMULANDO, "CATEGORIA_TESTE");
     }
 
     @AfterEach
@@ -72,7 +76,7 @@ public class PesquisarAtividadeCasoUsoTest {
     @Test
     @DisplayName("Should return activities filtered by user name when other fields are null")
     void testePesquisarAtividadesComUsuarioNomeQuandoOutrosCamposNull() {
-        pesquisarAtividadeCasoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, "USUARIO_TESTE", null, null, null);
+        pesquisarAtividadeCasoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, cursoRepositorioJpa, "USUARIO_TESTE", null, null, null);
         this.entidade = createAtividadeEntidade();
         Page<AtividadeEntidade> page = new PageImpl<>(List.of(this.entidade));
         Pageable pageable = PageRequest.of(0, 10);
@@ -92,7 +96,7 @@ public class PesquisarAtividadeCasoUsoTest {
     @Test
     @DisplayName("Should return activities filtered by title when other fields are null")
     void testePesquisarAtividadesComTituloQuandoOutrosCamposNull() {
-        pesquisarAtividadeCasoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, null, "TITULO_TESTE", null, null);
+        pesquisarAtividadeCasoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, cursoRepositorioJpa, null, "TITULO_TESTE", null, null);
         this.entidade = createAtividadeEntidade();
         Page<AtividadeEntidade> page = new PageImpl<>(List.of(this.entidade));
         Pageable pageable = PageRequest.of(0, 10);
@@ -112,7 +116,7 @@ public class PesquisarAtividadeCasoUsoTest {
     @Test
     @DisplayName("Should return activities filtered by status when other fields are null")
     void testePesquisarAtividadesComStatusQuandoOutrosCamposNull() {
-        pesquisarAtividadeCasoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, null, null, EnumStatus.APROVADA, null);
+        pesquisarAtividadeCasoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, cursoRepositorioJpa, null, null, EnumStatus.APROVADA, null);
         this.entidade = createAtividadeEntidade();
         Page<AtividadeEntidade> page = new PageImpl<>(List.of(this.entidade));
         Pageable pageable = PageRequest.of(0, 10);
@@ -132,7 +136,7 @@ public class PesquisarAtividadeCasoUsoTest {
     @Test
     @DisplayName("Should return activities filtered by category when other fields are null")
     void testePesquisarAtividadesComCategoriaQuandoOutrosCamposNull() {
-        pesquisarAtividadeCasoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, null, null, null, "CATEGORIA_TESTE");
+        pesquisarAtividadeCasoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, cursoRepositorioJpa, null, null, null, "CATEGORIA_TESTE");
         this.entidade = createAtividadeEntidade();
         Page<AtividadeEntidade> page = new PageImpl<>(List.of(this.entidade));
         Pageable pageable = PageRequest.of(0, 10);
@@ -152,7 +156,7 @@ public class PesquisarAtividadeCasoUsoTest {
     @Test
     @DisplayName("Should return empty page when no activities match the criteria")
     void testePesquisarAtividadesSemResultado() {
-        pesquisarAtividadeCasoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, "USUARIO_TESTE", "TITULO_TESTE", EnumStatus.SIMULANDO, "CATEGORIA_TESTE");
+        pesquisarAtividadeCasoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, cursoRepositorioJpa, "USUARIO_TESTE", "TITULO_TESTE", EnumStatus.SIMULANDO, "CATEGORIA_TESTE");
         Page<AtividadeEntidade> page = new PageImpl<>(List.of());
         Pageable pageable = PageRequest.of(0, 10);
 

@@ -126,33 +126,6 @@ public class CategoriaRepositorioJpaTest {
         assertThat(result).isNotEmpty();
     }
 
-
-    @Test
-    @DisplayName("Search for an Categoria by NOME and return an existing successfully from DataBase")
-    void testFindByNomeSuccess() throws Exception {
-        this.optional = createOptionalCategoria();
-
-        when(categoriaRepositorioJpaSpring.findByNome(Mockito.any())).thenReturn(this.optional);
-        CategoriaEntidade result = categoriaRepositorio.findByNome(NOME);
-
-        assertThat(result).isInstanceOf(CategoriaEntidade.class);
-        assertThat(result).isNotNull();
-    }
-
-    @Test
-    @DisplayName("Search for an Categoria by NOME and return an excepiton because the NOME doesn't exist")
-    void testFindByNomeCategoriaNaoEncontradoException() throws Exception {
-        this.optional = Optional.empty();
-
-        when(categoriaRepositorioJpaSpring.findByNome(Mockito.any())).thenReturn(this.optional);
-        Exception thrown = assertThrows(CategoriaNaoEncontradaException.class, () -> {
-            categoriaRepositorio.findByNome(NOME);
-        });
-        
-        assertThat(thrown).isNotNull();
-        assertThat(thrown.getMessage()).isEqualTo("Categoria não encontrada na base de dados");
-    }
-
     @Test
     @DisplayName("Search for an Categoria by NOME and return an existing Optional successfully from DataBase")
     void testFindByNomeOptionalSuccess() throws Exception {

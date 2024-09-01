@@ -10,7 +10,6 @@ import com.cefet.godziny.api.categoria.CategoriaRecuperarDto;
 import com.cefet.godziny.constantes.usuario.EnumRecursos;
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
-import com.cefet.godziny.infraestrutura.exceptions.UsuarioNaoAutorizadoException;
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaEntidade;
 import com.cefet.godziny.infraestrutura.rest.categoria.CategoriaRestConverter;
 import jakarta.validation.constraints.NotNull;
@@ -27,17 +26,11 @@ public class PesquisarCategoriaCasoUso {
     @NotNull(message = "O nome da categoria é obrigatória")
     private String nome;
     
-    public void validarPesquisa() throws Exception {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UsuarioEntidade userContext = (UsuarioEntidade) authentication.getPrincipal();
-        if(!userContext.getTipo().equals(EnumRecursos.ADM)){
-            throw new UsuarioNaoAutorizadoException();
-        }
-    }
+    public void validarPesquisa() throws Exception {}
 
     public Page<CategoriaRecuperarDto> pesquisarCategoria(Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UsuarioEntidade admin = (UsuarioEntidade) authentication.getPrincipal();
+        UsuarioEntidade userContext = (UsuarioEntidade) authentication.getPrincipal();
 
         Specification<CategoriaEntidade> specification = Specification.where(null);
 
@@ -50,8 +43,14 @@ public class PesquisarCategoriaCasoUso {
                 criteriaBuilder.like(root.get("nome"), "%" + nome + "%"));
         }
 
-        specification = Specification.where((root, query, criteriaBuilder) ->
-            criteriaBuilder.equal(root.get("curso").get("coordenador").get("matricula"), admin.getMatricula()));
+        if(userContext.getTipo().equals(EnumRecursos.ADM)){
+            specification = Specification.where((root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("curso").get("coordenador").get("matricula"), userContext.getMatricula()));
+        }
+        else{
+            specification = specification.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.in(root.get("curso").get("id")).value(userContext.getCurso().getId()));  
+        }
 
         Page<CategoriaRecuperarDto> pageCategoriaRecuperarDto = categoriaRepositorioJpa.listCategorias(specification, pageable)
             .map(CategoriaRestConverter::EntidadeToCategoriaRecuperarDto);

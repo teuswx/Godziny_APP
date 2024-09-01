@@ -19,6 +19,7 @@ import com.cefet.godziny.domain.casouso.atividade.RemoverAtividadeCasoUso;
 import com.cefet.godziny.infraestrutura.persistencia.atividade.AtividadeRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.atividade.arquivo.ArquivoRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaRepositorioJpa;
+import com.cefet.godziny.infraestrutura.persistencia.curso.CursoRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioRepositorioJpa;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,9 @@ public class AtividadeControle implements IAtividadeApi {
     private final UsuarioRepositorioJpa usuarioRepositorioJpa;
 
     @Autowired
+    private final CursoRepositorioJpa cursoRepositorioJpa;
+
+    @Autowired
     private final CategoriaRepositorioJpa categoriaRepositorioJpa;
 
     @Autowired
@@ -52,7 +56,8 @@ public class AtividadeControle implements IAtividadeApi {
 
     @Override
     public ResponseEntity<Page<AtividadeRecuperarDto>> pesquisarAtividades(Pageable pageable, AtividadeFiltroDto atividadeFiltroDto) throws Exception {
-        PesquisarAtividadeCasoUso casoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, atividadeFiltroDto.getUsuarioNome(), atividadeFiltroDto.getTitulo(), atividadeFiltroDto.getStatus(), atividadeFiltroDto.getCategoria());
+        PesquisarAtividadeCasoUso casoUso = new PesquisarAtividadeCasoUso(atividadeRepositorioJpa, cursoRepositorioJpa, atividadeFiltroDto.getUsuarioNome(), atividadeFiltroDto.getTitulo(), atividadeFiltroDto.getStatus(), atividadeFiltroDto.getCategoria());
+        casoUso.validarPesquisa();
         return ResponseEntity.status(HttpStatus.OK).body(casoUso.pesquisarAtividade(pageable));
     }
 

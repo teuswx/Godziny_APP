@@ -31,6 +31,7 @@ import com.cefet.godziny.infraestrutura.persistencia.atividade.arquivo.ArquivoRe
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.categoria.CategoriaRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoEntidade;
+import com.cefet.godziny.infraestrutura.persistencia.curso.CursoRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioRepositorioJpa;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -87,6 +88,9 @@ public class AtividadeControleTest{
     private UsuarioRepositorioJpa usuarioRepositorioJpa;
 
     @Mock
+    private CursoRepositorioJpa cursoRepositorioJpa;
+
+    @Mock
     private AtividadeRepositorioJpa atividadeRepositorioJpa;
 
     @Mock
@@ -95,7 +99,7 @@ public class AtividadeControleTest{
     @BeforeEach
     void inicializarDados() {
         MockitoAnnotations.openMocks(this);
-        controler = new AtividadeControle(atividadeRepositorioJpa, usuarioRepositorioJpa, categoriaRepositorioJpa, arquivoRepositorioJpa);
+        controler = new AtividadeControle(atividadeRepositorioJpa, usuarioRepositorioJpa,  cursoRepositorioJpa, categoriaRepositorioJpa, arquivoRepositorioJpa);
     };
 
     @AfterEach

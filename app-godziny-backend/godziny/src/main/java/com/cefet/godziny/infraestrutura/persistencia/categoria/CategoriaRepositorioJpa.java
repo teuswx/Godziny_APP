@@ -39,12 +39,6 @@ public class CategoriaRepositorioJpa implements ICategoriaRepositorio{
     }
 
     @Override
-    public CategoriaEntidade findByNome(String nome) throws Exception {
-        Optional<CategoriaEntidade> entidade = repositorio.findByNome(nome);
-        return CategoriaRestConverter.OptionalToCategoriaEntidade(entidade);
-    }
-
-    @Override
     public Optional<CategoriaEntidade > findByNomeOptional(String nome) {
         return repositorio.findByNome(nome);
     }
