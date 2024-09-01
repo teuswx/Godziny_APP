@@ -1,11 +1,16 @@
 package com.cefet.godziny.domain.casouso.usuario;
 
+import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import com.cefet.godziny.api.usuario.UsuarioRecuperarDto;
-import com.cefet.godziny.infraestrutura.persistencia.curso.CursoEntidade;
+import com.cefet.godziny.constantes.usuario.EnumRecursos;
+import com.cefet.godziny.infraestrutura.exceptions.UsuarioNaoAutorizadoException;
 import com.cefet.godziny.infraestrutura.persistencia.curso.CursoRepositorioJpa;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioEntidade;
 import com.cefet.godziny.infraestrutura.persistencia.usuario.UsuarioRepositorioJpa;
@@ -30,13 +35,20 @@ public class PesquisarUsuarioCasoUso {
     @NotNull(message = "O nome do usuário é obrigatório")
     private String nome;
 
-    public CursoEntidade validarPesquisa() throws Exception {
-        return cursoRepositorioJpa.findBySigla(cursoSigla);
+    public void validarPesquisa() throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UsuarioEntidade userContext = (UsuarioEntidade) authentication.getPrincipal();
+        if(!userContext.getTipo().equals(EnumRecursos.ADM)){
+            throw new UsuarioNaoAutorizadoException();
+        }
     }
     
     public Page<UsuarioRecuperarDto> pesquisarUsuarios(Pageable pageable) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UsuarioEntidade admin = (UsuarioEntidade) authentication.getPrincipal();
+        List<UUID> cursoIds = cursoRepositorioJpa.findByCoordenador(admin.getMatricula());
+
         Specification<UsuarioEntidade> specification = Specification.where(null);
-    
         if (nome != null) {
             specification = specification.and((root, query, criteriaBuilder) -> 
                 criteriaBuilder.like(root.get("nome"), "%" + nome + "%"));
@@ -49,6 +61,10 @@ public class PesquisarUsuarioCasoUso {
             specification = specification.and((root, query, criteriaBuilder) ->
                 criteriaBuilder.like(criteriaBuilder.lower(root.get("curso").get("sigla")), "%" + cursoSigla.toLowerCase() + "%"));
         }
+
+        specification = specification.and((root, query, criteriaBuilder) ->
+            root.get("curso").get("id").in(cursoIds)
+        );
     
         Page<UsuarioRecuperarDto> pageUsuarioRecuperarDto = usuarioRepositorioJpa.listUsuarios(specification, pageable)
             .map(UsuarioRestConverter::EntidadeToUsuarioRecuperarDto);

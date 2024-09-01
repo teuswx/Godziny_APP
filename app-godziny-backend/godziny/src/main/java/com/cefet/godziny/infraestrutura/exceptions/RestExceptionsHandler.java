@@ -172,4 +172,10 @@ public class RestExceptionsHandler extends ResponseEntityExceptionHandler {
         RestDefaultErrorMessage error = new RestDefaultErrorMessage(HttpStatus.UNAUTHORIZED, exception.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
+
+    @ExceptionHandler(UsuarioNaoAutorizadoException .class)
+    public ResponseEntity<RestDefaultErrorMessage> usuarioNaoAutorizadoException (UsuarioNaoAutorizadoException exception) {
+        RestDefaultErrorMessage error = new RestDefaultErrorMessage(HttpStatus.UNAUTHORIZED, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
 }

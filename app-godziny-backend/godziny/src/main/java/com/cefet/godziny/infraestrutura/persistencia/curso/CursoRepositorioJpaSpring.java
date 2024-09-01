@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,4 +24,7 @@ public interface CursoRepositorioJpaSpring extends JpaRepository<CursoEntidade, 
         @Param("newCargaHorariaComplementar") int newCargaHorariaComplementar,
         @Param("newNome") String newNome
     );
+
+    @Query("SELECT c.id FROM CursoEntidade c WHERE c.coordenador.matricula = :matricula")
+    List<UUID> findByAdmin(@Param("matricula") Integer matricula);
 }

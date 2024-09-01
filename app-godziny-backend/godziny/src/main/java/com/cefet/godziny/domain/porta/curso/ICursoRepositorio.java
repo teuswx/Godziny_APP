@@ -1,6 +1,8 @@
 package com.cefet.godziny.domain.porta.curso;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -11,6 +13,8 @@ public interface ICursoRepositorio {
     CursoEntidade findBySigla(String sigla) throws Exception;
 
     Optional<CursoEntidade>findBySiglaOptional(String sigla);
+
+    List<UUID> findByCoordenador(Integer matricula);
 
     Page<CursoEntidade> listCursos(Specification<CursoEntidade> specification, Pageable pageable);
     
