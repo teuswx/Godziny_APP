@@ -56,7 +56,7 @@ public class CriarUsuarioCasoUso {
         if (!isValidEmailAddress(this.email)) {
             throw new CriarUsuarioIncompletoException("O email fornecido para o usuário não é válido");
         }
-        if(usuarioRepositorioJpa.findByEmail(this.email) != null){
+        if(usuarioRepositorioJpa.findByEmailOptional(this.email).isPresent()){
             throw new CriarUsuarioEmailRepetidoException();
         }
         if (this.createdAt.isAfter(LocalDateTime.now())) {

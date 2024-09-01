@@ -2,6 +2,7 @@ package com.cefet.godziny.domain.casouso.usuario;
 
 import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,6 +62,7 @@ public class CriarUsuarioCasoUsoTest {
         
         when(cursoRepositorioJpa.findBySigla(Mockito.anyString())).thenReturn(cursoEntidade);
         when(usuarioRepositorioJpa.createUsuario(Mockito.any(UsuarioEntidade.class))).thenReturn(99999);
+        when(usuarioRepositorioJpa.findByEmailOptional(Mockito.anyString())).thenReturn(Optional.empty());
         this.criarUsuarioCasoUso.validarCriacao();
         Integer response = criarUsuarioCasoUso.createUsuario(usuarioDto);
 
@@ -76,6 +78,7 @@ public class CriarUsuarioCasoUsoTest {
         
         when(cursoRepositorioJpa.findBySigla(Mockito.anyString())).thenReturn(cursoEntidade);
         when(usuarioRepositorioJpa.createUsuario(Mockito.any(UsuarioEntidade.class))).thenReturn(99999);
+        when(usuarioRepositorioJpa.findByEmailOptional(Mockito.anyString())).thenReturn(Optional.empty());
         this.criarUsuarioCasoUso.validarCriacao();
         Integer response = criarUsuarioCasoUso.createUsuario(usuarioDto);
 
@@ -151,17 +154,19 @@ public class CriarUsuarioCasoUsoTest {
     @Test
     @DisplayName("Try to create an Usuario and return an exception because the EMAIL is already in the database")
     void testeCriarUsuarioCasoUsoExceptionCase6() throws Exception {
-        UsuarioEntidade usuarioEntidade = new UsuarioEntidade(
-            999999, 
-            createCursoEntidade(),
-            "TESTE",
-            "teste@teste.com.br",
-            "teste123",
-            EnumRecursos.NORMAL,
-            LocalDateTime.now()
+        Optional<UsuarioEntidade> usuarioEntidade = Optional.of(
+            new UsuarioEntidade(
+                999999, 
+                createCursoEntidade(),
+                "TESTE",
+                "teste@teste.com.br",
+                "teste123",
+                EnumRecursos.NORMAL,
+                LocalDateTime.now()
+            )
         );
 
-        when(usuarioRepositorioJpa.findByEmail(Mockito.anyString())).thenReturn(usuarioEntidade);
+        when(usuarioRepositorioJpa.findByEmailOptional(Mockito.anyString())).thenReturn(usuarioEntidade);
         
         Exception thrown = assertThrows(CriarUsuarioEmailRepetidoException.class, () -> {
             this.criarUsuarioCasoUso.validarCriacao();
