@@ -16,7 +16,7 @@ public interface IAtividadeApi {
     @GetMapping("/{atividadeId}")
     ResponseEntity<AtividadeRecuperarDto> getAtividade(@PathVariable(value = "atividadeId") UUID id) throws Exception;
 
-    @GetMapping("/pesquisar")
+    @PostMapping("/pesquisar")
         ResponseEntity<Page<AtividadeRecuperarDto>> pesquisarAtividades(
             @PageableDefault(page = 0, size = 10, sort = "titulo", direction = Sort.Direction.ASC)
             Pageable pageable,

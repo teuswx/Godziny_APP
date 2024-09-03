@@ -15,7 +15,7 @@
         @GetMapping("/{categoriaId}")
         ResponseEntity<CategoriaRecuperarDto> getCategoria(@PathVariable(value = "categoriaId") UUID id) throws Exception;
 
-        @GetMapping("/pesquisar")
+        @PostMapping("/pesquisar")
         ResponseEntity<Page<CategoriaRecuperarDto>> pesquisarCategorias(
             @PageableDefault(page = 0, size = 10, sort = "nome", direction = Sort.Direction.ASC)
             Pageable pageable,
