@@ -2,7 +2,7 @@ select * from tb_usuario;
 
 -- Inserir usuários ADM
 INSERT INTO tb_usuario (matricula, created_at, email, senha, nome, tipo) VALUES
-(1, '2024-07-10T00:16:18', 'luanlul2010cpp@professor.com', '$2a$10$.jiiRklWLqFA//YiGhNUteIcBLrpKU.qtmmUfRq3Xtqy.Cjgykzq2', 'Lulu LOL', 'ADM'),
+(1, '2024-07-10T00:16:18', 'luanlul2010cpp@professor.com', '$2a$10$.jiiRklWLqFA//YiGhNUteIcBLrpKU.qtmmUfRq3Xtqy.Cjgykzq2', 'Luan Santos', 'ADM'),
 (5, '2024-07-10T00:16:18', 'maria.silva@professor.com', 'senha001', 'Maria Silva', 'ADM'),
 (6, '2024-07-10T00:16:18', 'joao.santos@professor.com', 'senha002', 'João Santos', 'ADM'),
 (7, '2024-07-10T00:16:18', 'lucas.oliveira@professor.com', 'senha003', 'Lucas Oliveira', 'ADM'),
@@ -10,23 +10,22 @@ INSERT INTO tb_usuario (matricula, created_at, email, senha, nome, tipo) VALUES
 (9, '2024-07-10T00:16:18', 'pedro.gomes@professor.com', 'senha005', 'Pedro Gomes', 'ADM'),
 (10, '2024-07-10T00:16:18', 'carla.pereira@professor.com', 'senha006', 'Carla Pereira', 'ADM');
 
-
 -- Inserir cursos
 INSERT INTO tb_curso (id, sigla, nome, carga_horaria_complementar, coordenador_id) VALUES
-('7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'ENG-COMP', 'Engenharia da Computação', 420, 5),
-('3a8d56d5-6f3e-4a1f-9b2e-c4f9aefc8e3c', 'ENG-MECA', 'Engenharia Mecatrônica', 420, 6),
-('29f9c78e-5267-46b3-a843-9f0a0efb7c6f', 'ENG-CIV', 'Engenharia Civil', 420, 6),
-('c7a2b0c7-1f4b-4df1-bd7f-4b46c8a2bf70', 'MODA', 'Bacharelado em Moda', 450, 7),
-('d2b90ef3-4783-4e84-94db-2e6d7e9af3fb', 'MED', 'Medicina', 600, 7),
-('f33e8f1e-6b3e-4b2a-9c3f-0e4d1d6f7b99', 'DIR', 'Direito', 500, 7),
+('7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'ENG-COMP', 'Engenharia da Computação', 420, 1),
+('3a8d56d5-6f3e-4a1f-9b2e-c4f9aefc8e3c', 'ENG-MECA', 'Engenharia Mecatrônica', 420, 1),
+('29f9c78e-5267-46b3-a843-9f0a0efb7c6f', 'ENG-CIV', 'Engenharia Civil', 420, 1),
+('c7a2b0c7-1f4b-4df1-bd7f-4b46c8a2bf70', 'MODA', 'Bacharelado em Moda', 450, 1),
+('d2b90ef3-4783-4e84-94db-2e6d7e9af3fb', 'MED', 'Medicina', 600, 5),
+('f33e8f1e-6b3e-4b2a-9c3f-0e4d1d6f7b99', 'DIR', 'Direito', 500, 6),
 ('ab8c4c3b-2c7b-49c1-bb38-6f9b6c1c46d4', 'ADM', 'Administração', 450, 7),
-('e5a9bafc-5c2f-4382-b9a6-3a83e24df9e7', 'ENG-PROD', 'Engenharia de Produção', 420, 6),
-('dc9a4e1a-489c-4c5b-917a-3d2f6e8f9dbb', 'ENG-AMB', 'Engenharia Ambiental', 420, 6),
-('91d5ef3a-83e9-4c3a-857f-5f2b1a47ebc7', 'ENG-ELT', 'Engenharia Elétrica', 420, 6);
+('e5a9bafc-5c2f-4382-b9a6-3a83e24df9e7', 'ENG-PROD', 'Engenharia de Produção', 420, 1),
+('dc9a4e1a-489c-4c5b-917a-3d2f6e8f9dbb', 'ENG-AMB', 'Engenharia Ambiental', 420, 1),
+('91d5ef3a-83e9-4c3a-857f-5f2b1a47ebc7', 'ENG-ELT', 'Engenharia Elétrica', 420, 1);
 
 -- Inserir usuários Não Administradores
 INSERT INTO tb_usuario (matricula, created_at, curso_id, email, senha, nome, tipo) VALUES
-(11, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'werneckX.filipe@aluno.com', '$2a$10$T8aFar2CUy/a13cys3rI.OYroKRTL/7y0kAod2WANHVCzA7A7n1YG', 'Felipe EKKO Werneck', 'NORMAL'),
+(11, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'werneckX.filipe@aluno.com', '$2a$10$T8aFar2CUy/a13cys3rI.OYroKRTL/7y0kAod2WANHVCzA7A7n1YG', 'Felipe Werneck', 'NORMAL'),
 (12, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'victor.souza@aluno.com', 'senha011', 'Victor Souza', 'NORMAL'),
 (13, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'larissa.oliveira@aluno.com', 'senha012', 'Larissa Oliveira', 'NORMAL'),
 (14, '2024-07-10T00:16:18', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 'danilo.pereira@aluno.com', 'senha013', 'Danilo Pereira', 'NORMAL'),
@@ -118,7 +117,6 @@ INSERT INTO tb_usuario (matricula, created_at, curso_id, email, senha, nome, tip
 (100, '2024-07-10T00:16:18', '91d5ef3a-83e9-4c3a-857f-5f2b1a47ebc7', 'rogerio.souza@aluno.com', 'senha099', 'Rogerio Souza', 'NORMAL');
 
 UPDATE tb_usuario SET senha = '$2a$10$.jiiRklWLqFA//YiGhNUteIcBLrpKU.qtmmUfRq3Xtqy.Cjgykzq2';
-
 INSERT INTO tb_categoria (id, curso_id, horas_multiplicador, nome, porcentagem_horas_maximas, descricao) VALUES
 -- Engenharia da Computação
 ('7e1d4c7a-5b4f-4d7c-927d-6e5e4dcb96c8', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 1.5, 'Palestra', 0.2, 'Participação em palestras relacionadas à área de Engenharia da Computação'),
