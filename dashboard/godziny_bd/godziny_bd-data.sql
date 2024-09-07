@@ -176,15 +176,15 @@ INSERT INTO tb_categoria (id, curso_id, horas_multiplicador, nome, porcentagem_h
 INSERT INTO tb_atividade (id, usuario_id, categoria_id, titulo, created_at, carga_horaria, status) VALUES
 ('9e0f1a2b-3c4d-5e6f-7a8b-0c1d2e3f4a5b', 27,'7e1d4c7a-5b4f-4d7c-927d-6e5e4dcb96c8', 'Palestra sobre Circuitos Elétricos', '2024-07-10T00:16:18', 12, 'APROVADA'),
 ('1a2b3c4d-5e6f-7a8b-9c0d-4e5f6a7b8c9d', 28,'7e1d4c7a-5b4f-4d7c-927d-6e5e4dcb96c8', 'Workshop de Algoritmos', '2024-07-10T00:16:18', 15,'APROVADA'),
-('8c9d0e1a-2b3c-4d5e-6f7a-0b8c1d2e3f4a', 29,'7e1d4c7a-5b4f-4d7c-927d-6e5e4dcb96c8', 'Seminário sobre Robótica', '2024-07-10T00:16:18', 20,'APROVADA'),
-('6a7b8c9d-0e1f-2c3d-4e5f-8a9b0c1d2e3f', 22,'7e1d4c7a-5b4f-4d7c-927d-6e5e4dcb96c8','Congresso de Materiais de Construção', '2024-07-10T00:16:18', 18,'APROVADA'),
-('5f6a7b8c-9d0e-1a2b-3c4d-7e8f9a0c1d2e', 22,'a3b1e1a0-c4e2-4a5d-9d8b-df3b6a6c9f21','Curso de Gestão Ambiental', '2024-07-10T00:16:18', 14,'APROVADA'),
+('8c9d0e1a-2b3c-4d5e-6f7a-0b8c1d2e3f4a', 11,'7e1d4c7a-5b4f-4d7c-927d-6e5e4dcb96c8', 'Seminário sobre Robótica', '2024-07-10T00:16:18', 20,'APROVADA'),
+('6a7b8c9d-0e1f-2c3d-4e5f-8a9b0c1d2e3f', 11,'7e1d4c7a-5b4f-4d7c-927d-6e5e4dcb96c8','Congresso de Materiais de Construção', '2024-07-10T00:16:18', 18,'APROVADA'),
+('5f6a7b8c-9d0e-1a2b-3c4d-7e8f9a0c1d2e', 11,'a3b1e1a0-c4e2-4a5d-9d8b-df3b6a6c9f21','Curso de Gestão Ambiental', '2024-07-10T00:16:18', 14,'APROVADA'),
 ('2f3a4b5c-6d7e-8f9a-0b1c-2d3e4f5a6b7c', 25,'a3b1e1a0-c4e2-4a5d-9d8b-df3b6a6c9f21','Curso de Gestão da Produção', '2024-07-10T00:16:18', 12,'APROVADA'),
 ('7b8c9d0e-1a2f-4b5c-6d7e-8f9a0c1d2e3f', 30,'a3b1e1a0-c4e2-4a5d-9d8b-df3b6a6c9f21', 'Palestra sobre Processos Químicos', '2024-07-10T00:16:18', 22,'APROVADA'),
 ('9d0e1a2b-3c4d-5e6f-7a8b-9c0d1e2f3a4b', 33,'a3b1e1a0-c4e2-4a5d-9d8b-df3b6a6c9f21', 'Workshop de Telecomunicações', '2024-07-10T00:16:18', 16,'APROVADA'),
 ('4e5f6a7b-8c9d-0a1b-2c3d-4e5f6a7b8c9d', 28,'a3b1e1a0-c4e2-4a5d-9d8b-df3b6a6c9f21', 'Curso de Ciência dos Materiais', '2024-07-10T00:16:18', 20,'APROVADA'),
 ('1b2c3d4e-5f6a-7b8c-9d0e-1a2f3a4b5c6d', 29,'a3b1e1a0-c4e2-4a5d-9d8b-df3b6a6c9f21', 'Congresso de Engenharia Naval', '2024-07-10T00:16:18', 19,'APROVADA'),
-('8a9b0c1d-2e3f-4a5b-6c7d-8e9f0a1b2c3d', 21,'a3b1e1a0-c4e2-4a5d-9d8b-df3b6a6c9f21', 'Workshop de Programação Orientada a Objetos', '2024-07-10T00:16:18',  14,'APROVADA'),
+('8a9b0c1d-2e3f-4a5b-6c7d-8e9f0a1b2c3d', 11,'a3b1e1a0-c4e2-4a5d-9d8b-df3b6a6c9f21', 'Workshop de Programação Orientada a Objetos', '2024-07-10T00:16:18',  14,'APROVADA'),
 ('6c7d8e9f-0a1b-2c3d-4e5f-8a9b0c1d2e3f', 22,'c3d1e9b4-9c2e-4b6e-91f8-a5d6f2a1c3b4', 'Curso Avançado de Banco de Dados', '2024-07-10T00:16:18', 16,'APROVADA'),
 ('3d4e5f6a-7b8c-9d0e-1a2f-4b5c6d7e8f9a', 23,'c3d1e9b4-9c2e-4b6e-91f8-a5d6f2a1c3b4', 'Curso de Simulação Computacional', '2024-07-10T00:16:18', 18,'APROVADA'),
 ('2e5a6b7c-8d9f-0a1b-4c3d-2e6f7a8b9c0d', 24,'c3d1e9b4-9c2e-4b6e-91f8-a5d6f2a1c3b4', 'Curso de Estatística para Dados', '2024-07-10T00:16:18', 22,'APROVADA'),
@@ -193,4 +193,21 @@ INSERT INTO tb_atividade (id, usuario_id, categoria_id, titulo, created_at, carg
 ('7c4b9d8e-1a2f-3d4e-5b6c-7f8a9e0d1c2b', 27,'c3d1e9b4-9c2e-4b6e-91f8-a5d6f2a1c3b4', 'Workshop de Redes de Computadores', '2024-07-10T00:16:18', 18,'REJEITADA'),
 ('3e8f1d2b-4a5c-6d7e-9f0a-1b2c3d4e5f6a', 28,'c3d1e9b4-9c2e-4b6e-91f8-a5d6f2a1c3b4', 'Seminário sobre Gestão de Projetos', '2024-07-10T00:16:18', 15,'REJEITADA'),
 ('5a6b7c8d-9e0f-4a1b-2c3d-4e5f6a7b8c9d', 29,'c3d1e9b4-9c2e-4b6e-91f8-a5d6f2a1c3b4', 'Curso de Análise de Dados', '2024-07-10T00:16:18', 14,'REJEITADA'),
-('e3b1a2f5-8d4e-43b7-9d3c-0a1b2c3d4e5f', 30,'c3d1e9b4-9c2e-4b6e-91f8-a5d6f2a1c3b4', 'Workshop de Arquitetura de Computadores', '2024-07-10T00:16:18', 16,'REJEITADA');
+('e3b1a2f5-8d4e-43b7-9d3c-0a1b2c3d4e5f', 11,'c3d1e9b4-9c2e-4b6e-91f8-a5d6f2a1c3b4', 'Workshop de Arquitetura de Computadores', '2024-07-10T00:16:18', 16,'REJEITADA');
+
+-- Inserir atividades
+INSERT INTO tb_atividade (id, usuario_id, categoria_id, titulo, created_at, carga_horaria, status) VALUES
+-- Categoria: Palestra
+('d1e2f3a4-b5c6-7d8e-9f0a-1b2c3d4e5f6a', 11, '7e1d4c7a-5b4f-4d7c-927d-6e5e4dcb96c8', 'Palestra sobre Inteligência Artificial', '2024-08-01T00:16:18', 10, 'APROVADA'),
+-- Categoria: Curso na área de concentração do Curso
+('a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d', 11, 'a3b1e1a0-c4e2-4a5d-9d8b-df3b6a6c9f21', 'Curso de Programação Avançada', '2024-08-05T00:16:18', 20, 'APROVADA'),
+-- Categoria: Curso em outra área de concentração do Curso
+('f2e3d4c5-b6a7-8c9d-0e1f-2a3b4c5d6e7f', 11, '6e9f1c24-b1c8-4b15-a6f7-8c5e3b8d72ef', 'Curso de Sistemas Embarcados', '2024-08-10T00:16:18', 15, 'APROVADA'),
+-- Categoria: Iniciação Científica
+('b4c5d6e7-f8a9-0b1c-2d3e-4f5a6b7c8d9e', 11, '5d6f8b37-a8c4-49a4-a0d7-2e4b5a6f7d89', 'Projeto de Pesquisa em Computação Quântica', '2024-08-15T00:16:18', 25, 'APROVADA'),
+-- Categoria: Apresentação de Seminário
+('c6d7e8f9-a0b1-2c3d-4e5f-6a7b8c9d0e1f', 11, 'c3d1e9b4-9c2e-4b6e-91f8-a5d6f2a1c3b4', 'Seminário sobre Redes Neurais', '2024-08-20T00:16:18', 18, 'APROVADA'),
+-- Categoria: Curso Avançado de Engenharia de Software
+('d7e8f9a0-b1c2-3d4e-5f6a-7b8c9d0e1a2f', 11, 'c3d1e9b4-9c2e-4b6e-91f8-a5d6f2a1c3b4', 'Curso Avançado em Engenharia de Software', '2024-08-25T00:16:18', 22, 'APROVADA'),
+-- Categoria: Curso de Inteligência Artificial
+('e8f9a0b1-c2d3-4e5f-6a7b-8c9d0e1a2f3b', 11, 'a3b1e1a0-c4e2-4a5d-9d8b-df3b6a6c9f21', 'Curso de Machine Learning', '2024-08-30T00:16:18', 30, 'APROVADA');
