@@ -117,6 +117,8 @@ INSERT INTO tb_usuario (matricula, created_at, curso_id, email, senha, nome, tip
 (99, '2024-07-10T00:16:18', '91d5ef3a-83e9-4c3a-857f-5f2b1a47ebc7', 'veronica.lima@aluno.com', 'senha098', 'Veronica Lima', 'NORMAL'),
 (100, '2024-07-10T00:16:18', '91d5ef3a-83e9-4c3a-857f-5f2b1a47ebc7', 'rogerio.souza@aluno.com', 'senha099', 'Rogerio Souza', 'NORMAL');
 
+UPDATE tb_usuario SET senha = '$2a$10$.jiiRklWLqFA//YiGhNUteIcBLrpKU.qtmmUfRq3Xtqy.Cjgykzq2';
+
 INSERT INTO tb_categoria (id, curso_id, horas_multiplicador, nome, porcentagem_horas_maximas, descricao) VALUES
 -- Engenharia da Computação
 ('7e1d4c7a-5b4f-4d7c-927d-6e5e4dcb96c8', '7b1c2f69-4f9a-4e8a-b3ad-8b2d3c2b5b6e', 1.5, 'Palestra', 0.2, 'Participação em palestras relacionadas à área de Engenharia da Computação'),

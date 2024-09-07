@@ -1,14 +1,11 @@
 @echo off
 setlocal
 
-:: Defina o caminho base do projeto e da pasta do frontend
 set PROJECT_DIR=C:\Users\mathe\OneDrive\Desktop\ESTUDOS\Engenharia de Software\godziny\Godziny_APP
 set FRONTEND_DIR=%PROJECT_DIR%\front-end
 
-:: Vá para o diretório do frontend
 cd /d "%FRONTEND_DIR%"
 
-:: Verifique se a pasta node_modules existe para determinar se as dependências estão instaladas
 if exist node_modules (
     echo As dependências já estão instaladas. Iniciando o frontend...
 ) else (
@@ -23,9 +20,7 @@ if exist node_modules (
     )
 )
 
-:: Execute o servidor de desenvolvimento
 echo Iniciando o frontend com npm run serve...
 npm run serve
 
-:: Mantenha o terminal aberto
 pause
