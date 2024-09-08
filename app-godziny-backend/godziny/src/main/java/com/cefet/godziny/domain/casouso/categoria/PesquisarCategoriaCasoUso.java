@@ -44,7 +44,7 @@ public class PesquisarCategoriaCasoUso {
         }
 
         if(userContext.getTipo().equals(EnumRecursos.ADM)){
-            specification = Specification.where((root, query, criteriaBuilder) ->
+            specification = specification.and((root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("curso").get("coordenador").get("matricula"), userContext.getMatricula()));
         }
         else{
