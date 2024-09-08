@@ -50,7 +50,7 @@ public class PesquisarCursoCasoUso {
                 criteriaBuilder.like(root.get("sigla"), "%" + sigla + "%"));
         }
 
-        specification = Specification.where((root, query, criteriaBuilder) -> 
+        specification = specification.and((root, query, criteriaBuilder) -> 
             criteriaBuilder.equal(root.get("coordenador").get("matricula"), admin.getMatricula()));
 
         Page<CursoRecuperarDto> pageCursoRecuperarDto = cursoRepositorioJpa.listCursos(specification, pageable)
